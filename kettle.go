@@ -9,6 +9,6 @@ func NewSteamApi(key string) *steam.Steam {
 	return steam.New(key)
 }
 
-func NewStoreApi(key string) *store.Store {
+func NewStoreApi() *store.Store {
 	return store.New()
 }
