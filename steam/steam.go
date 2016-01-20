@@ -46,7 +46,6 @@ func New(key string) *Steam {
 		baseUrl:    BaseUrl,
 		key:        key,
 	}
-	log.SetLevel(log.DebugLevel)
 	log.SetFormatter(&log.JSONFormatter{})
 	go api.throttledQuery()
 	return api
