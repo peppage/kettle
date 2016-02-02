@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+const (
+	PrivateUser  = 401
+	UserNotFound = 500
+)
+
 type ApiError struct {
 	StatusCode int
 	Header     http.Header
@@ -15,7 +20,13 @@ type ApiError struct {
 }
 
 func (aerr ApiError) Error() string {
-	return fmt.Sprintf("Get %s returned status %d, %s", aerr.URL, aerr.StatusCode, aerr.Body)
+	switch aerr.StatusCode {
+	case PrivateUser:
+		return fmt.Sprintf("User is private")
+	case UserNotFound:
+		return fmt.Sprintf("User not found")
+	}
+	return fmt.Sprintf("Steam returned status %d, %s", aerr.URL, aerr.StatusCode, aerr.Body)
 }
 
 func (aerr ApiError) RateLimitCheck() (bool, time.Time) {
