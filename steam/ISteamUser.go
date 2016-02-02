@@ -94,6 +94,7 @@ type VanityResponse struct {
 type VResponse struct {
 	SteamID string `json:"steamid"`
 	Success int    `json:"success"`
+	Message string `json:"message"`
 }
 
 func (api *Steam) ResolveVanityURL(vanityName string) (data VanityResponse, err error) {
