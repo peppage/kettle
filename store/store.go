@@ -45,7 +45,6 @@ func New() *Store {
 		HttpClient: http.DefaultClient,
 		baseUrl:    BaseUrl,
 	}
-	log.SetFormatter(&log.JSONFormatter{})
 	go api.throttledQuery()
 	return api
 }
