@@ -23,7 +23,7 @@ func Test_AppDetails(t *testing.T) {
 		t.Errorf("Expected a successful hit")
 	}
 
-	if details["49520"].Data.Name != "Borderlands 2" {
-		t.Errorf("Expected title Borderlands 2 got, %s", details["49520"].Data.Name)
+	if details["49520"].Name != "Borderlands 2" {
+		t.Errorf("Expected title Borderlands 2 got, %s", details["49520"].Name)
 	}
 }

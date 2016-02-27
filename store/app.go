@@ -8,8 +8,8 @@ import (
 type AppDetailsResponse map[string]AppDetails
 
 type AppDetails struct {
-	Success bool    `json:"success"`
-	Data    AppData `json:"data"`
+	Success bool `json:"success"`
+	AppData `json:"data"`
 }
 
 type AppData struct {
@@ -32,16 +32,16 @@ type AppData struct {
 	Packages            []interface{}  `json:"packages"`
 	PackageGroups       []PackageGroup `json:"package_groups"`
 	Platforms           Platform       `json:"platforms"`
-	MetaCritic          MetaCritic     `json:"metacritic,omitempty"`
-	Categories          []Category     `json:"categories"`
-	Genres              []Genre        `json:"genres"`
-	Screenshots         []Screenshot   `json:"screenshots"`
-	Movies              []Movie        `json:"movies"`
-	Recommendations     Recomendations `json:"recommendations"`
-	Achievements        Achievements   `json:"achievements"`
-	ReleaseDate         ReleaseDate    `json:"release_date"`
-	SupportInto         SupportInfo    `json:"support_info"`
-	Background          string         `json:"background"`
+	MetaCritic          `json:"metacritic,omitempty"`
+	Categories          []Category   `json:"categories"`
+	Genres              []Genre      `json:"genres"`
+	Screenshots         []Screenshot `json:"screenshots"`
+	Movies              []Movie      `json:"movies"`
+	Recomendations      `json:"recommendations"`
+	Achievements        `json:"achievements"`
+	ReleaseDate         `json:"release_date"`
+	SupportInfo         `json:"support_info"`
+	Background          string `json:"background"`
 	//PcRequirements      Requirements   `json:"pc_requirements"` //This can be empty for demos
 	//RequredAge          string         `json:"required_age"` // Can be string or int
 	//MacRequirements     Requirements   `json:"mac_requirements,omitempty"`
@@ -114,8 +114,8 @@ type Movie struct {
 	ID         int    `json:"id"`
 	Name       string `json:"name"`
 	Thumbnail  string `json:"thumbnail"`
-	Webm       Webm   `json:"webm"`
-	Hightlight bool   `json:"highlight"`
+	Webm       `json:"webm"`
+	Hightlight bool `json:"highlight"`
 }
 
 type Webm struct {
