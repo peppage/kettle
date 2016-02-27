@@ -28,7 +28,7 @@ func Test_GetApps(t *testing.T) {
 
 	totalNewsItems := len(games.Applist.Apps)
 	if totalNewsItems < 100 {
-		t.Fatalf("Expected more than 100 apps, found %d", totalNewsItems)
+		t.Errorf("Expected more than 100 apps, found %d", totalNewsItems)
 	}
 }
 
@@ -40,7 +40,7 @@ func Test_GetNews(t *testing.T) {
 
 	totalNewsItems := len(news.AppNews.NewsItems)
 	if totalNewsItems < 2 {
-		t.Fatalf("Expecting more than 2 news items, found %d", totalNewsItems)
+		t.Errorf("Expecting more than 2 news items, found %d", totalNewsItems)
 	}
 }
 
@@ -52,7 +52,7 @@ func Test_GetFriends(t *testing.T) {
 
 	totalFriends := len(friends.FriendsList.Friends)
 	if totalFriends < 2 {
-		t.Fatalf("Expecting more than 2 friends, found %d", totalFriends)
+		t.Errorf("Expecting more than 2 friends, found %d", totalFriends)
 	}
 }
 
@@ -63,7 +63,7 @@ func Test_PlayerSummaries(t *testing.T) {
 	}
 
 	if summary.Response.Players[0].SteamID != strconv.FormatInt(steamID, 10) {
-		t.Fatalf("Expecting steam IDs to match, got %d", summary.Response.Players[0].SteamID)
+		t.Errorf("Expecting steam IDs to match, got %d", summary.Players[0].SteamID)
 	}
 }
 
@@ -74,7 +74,7 @@ func Test_PlayerVanity(t *testing.T) {
 	}
 
 	if vanityResp.Response.SteamID != strconv.FormatInt(steamID, 10) {
-		t.Fatalf("Expecting my Steam ID, got %d", vanityResp.Response.SteamID)
+		t.Errorf("Expecting my Steam ID, got %d", vanityResp.SteamID)
 	}
 }
 
@@ -85,6 +85,6 @@ func Test_GetOwnedGames(t *testing.T) {
 	}
 
 	if ownedResp.Response.GameCount < 263 {
-		t.Fatalf("Expected owned games larger or equal to 263, got %d", ownedResp.Response.GameCount)
+		t.Errorf("Expected owned games larger or equal to 263, got %d", ownedResp.GameCount)
 	}
 }
