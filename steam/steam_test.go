@@ -17,7 +17,7 @@ const steamID = int64(76561198006575550)
 const vanityName = "Peppage"
 
 func init() {
-	api = steam.NewSteamApi(KEY)
+	api = steam.New(KEY)
 }
 
 func Test_GetApps(t *testing.T) {
