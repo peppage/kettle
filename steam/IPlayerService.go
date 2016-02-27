@@ -6,7 +6,7 @@ import (
 )
 
 type OwnedGameResponse struct {
-	Response OGResponse `json:"response"`
+	OGResponse `json:"response"`
 }
 
 type OGResponse struct {

@@ -5,7 +5,7 @@ import (
 )
 
 type AppListResponse struct {
-	Applist Applist `json:"applist"`
+	Applist `json:"applist"`
 }
 
 type Applist struct {

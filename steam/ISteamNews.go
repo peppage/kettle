@@ -6,7 +6,7 @@ import (
 )
 
 type NewsResponse struct {
-	AppNews AppNews `json:"appnews"`
+	AppNews `json:"appnews"`
 }
 
 type AppNews struct {

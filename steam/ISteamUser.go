@@ -9,7 +9,7 @@ import (
 )
 
 type FriendListResponse struct {
-	FriendsList FriendsList `json:"friendslist"`
+	FriendsList `json:"friendslist"`
 }
 
 type FriendsList struct {
@@ -36,7 +36,7 @@ func (api *Steam) GetFriendList(id int64, v url.Values) (list FriendListResponse
 }
 
 type SummaryResponse struct {
-	Response SResponse `json:"response"`
+	SResponse `json:"response"`
 }
 
 type SResponse struct {
@@ -88,7 +88,7 @@ func (api *Steam) GetPlayerSummaries(ids []int64) (users SummaryResponse, err er
 }
 
 type VanityResponse struct {
-	Response VResponse `json:"Response"`
+	VResponse `json:"Response"`
 }
 
 type VResponse struct {
