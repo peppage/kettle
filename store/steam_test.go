@@ -7,14 +7,14 @@ import (
 	"kettle/store"
 )
 
-var storeApi *store.Store
+var storeAPI *store.Store
 
 func init() {
-	storeApi = steamstoreapi.NewSteamStoreApi()
+	storeAPI = store.New()
 }
 
 func Test_AppDetails(t *testing.T) {
-	details, err := storeApi.GetAppDetails(49520, url.Values{})
+	details, err := storeAPI.GetAppDetails(49520, url.Values{})
 	if err != nil {
 		t.Errorf("Getting app data failed: %s", err.Error())
 	}
