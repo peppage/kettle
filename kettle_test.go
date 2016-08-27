@@ -68,8 +68,8 @@ func Test_PlayerSummaries(t *testing.T) {
 		t.Errorf("Getting player summary failed: %s", err.Error())
 	}
 
-	if summary.Response.Players[0].SteamID != strconv.FormatInt(steamID, 10) {
-		t.Fatalf("Expecting steam IDs to match, got %d", summary.Response.Players[0].SteamID)
+	if summary.Players[0].SteamID != strconv.FormatInt(steamID, 10) {
+		t.Fatalf("Expecting steam IDs to match, got %s", summary.Players[0].SteamID)
 	}
 }
 
@@ -79,8 +79,8 @@ func Test_PlayerVanity(t *testing.T) {
 		t.Errorf("Getting player vanity failed: %s", err.Error())
 	}
 
-	if vanityResp.Response.SteamID != strconv.FormatInt(steamID, 10) {
-		t.Fatalf("Expecting my Steam ID, got %d", vanityResp.Response.SteamID)
+	if vanityResp.SteamID != strconv.FormatInt(steamID, 10) {
+		t.Fatalf("Expecting my Steam ID, got %s", vanityResp.SteamID)
 	}
 }
 
@@ -90,8 +90,8 @@ func Test_GetOwnedGames(t *testing.T) {
 		t.Errorf("Getting owned games failed: %s", err.Error())
 	}
 
-	if ownedResp.Response.GameCount < 263 {
-		t.Fatalf("Expected owned games larger or equal to 263, got %d", ownedResp.Response.GameCount)
+	if ownedResp.GameCount < 263 {
+		t.Fatalf("Expected owned games larger or equal to 263, got %d", ownedResp.GameCount)
 	}
 }
 
@@ -105,7 +105,7 @@ func Test_AppDetails(t *testing.T) {
 		t.Fatal("Expected a successful hit")
 	}
 
-	if details["49520"].Data.Name != "Borderlands 2" {
-		t.Fatalf("Expected title Borderlands 2 got, %s", details["49520"].Data.Name)
+	if details["49520"].Name != "Borderlands 2" {
+		t.Fatalf("Expected title Borderlands 2 got, %s", details["49520"].Name)
 	}
 }
