@@ -1,7 +1,6 @@
 package store
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/ChimeraCoder/tokenbucket"
 	log "github.com/Sirupsen/logrus"
+	"github.com/pquerna/ffjson/ffjson"
 )
 
 const (
@@ -104,7 +104,7 @@ func decodeResponse(resp *http.Response, data interface{}) error {
 		return NewApiError(resp)
 	}
 
-	return json.Unmarshal(body, &data)
+	return ffjson.Unmarshal(body, &data)
 }
 
 func NewApiError(resp *http.Response) *errors.ApiError {
