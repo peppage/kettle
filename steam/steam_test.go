@@ -88,3 +88,28 @@ func Test_GetOwnedGames(t *testing.T) {
 		t.Errorf("Expected owned games larger or equal to 263, got %d", ownedResp.GameCount)
 	}
 }
+
+func Test_GetPlayerAchievements(t *testing.T) {
+	v := url.Values{}
+	v.Set("appid", "432990")
+	chiveResp, err := api.GetPlayerAchievements(steamID, v)
+	if err != nil {
+		t.Errorf("Getting player achievements failed, %s", err.Error())
+	}
+
+	if chiveResp.PlayerStats.GameName != "Green Game: TimeSwapper" || len(chiveResp.PlayerStats.Achievements) < 15 {
+		t.Errorf("Expected green game achievements, %s, %d", chiveResp.PlayerStats.GameName, len(chiveResp.PlayerStats.Achievements))
+	}
+}
+
+func Test_GetGlobalAchievementData(t *testing.T) {
+	resp, err := api.GetGlobalAchievementPercentagesForApp(432990)
+	if err != nil {
+		t.Errorf("Getting global achievements failed, %s", err.Error())
+	}
+
+	if len(resp.AchievementPercentages.Achievements) < 15 {
+		t.Errorf("Expected 15 or more achievements, %d", len(resp.AchievementPercentages.Achievements))
+	}
+
+}
