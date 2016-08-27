@@ -40,10 +40,10 @@ type GameAchievementResp struct {
 }
 
 type AchievementPercentages struct {
-	Achievements []Gameachievement
+	Achievements []GameAchievement
 }
 
-type Gameachievement struct {
+type GameAchievement struct {
 	Name       string
 	Percentage float64
 }
