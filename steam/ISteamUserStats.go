@@ -44,8 +44,8 @@ type AchievementPercentages struct {
 }
 
 type GameAchievement struct {
-	Name       string
-	Percentage float64
+	Name    string
+	Percent float64
 }
 
 func (api *Steam) GetGlobalAchievementPercentagesForApp(id int64) (resp GameAchievementResp, err error) {

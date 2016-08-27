@@ -523,8 +523,8 @@ func (mj *GameAchievement) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	_ = err
 	buf.WriteString(`{"Name":`)
 	fflib.WriteJsonString(buf, string(mj.Name))
-	buf.WriteString(`,"Percentage":`)
-	fflib.AppendFloat(buf, float64(mj.Percentage), 'g', -1, 64)
+	buf.WriteString(`,"Percent":`)
+	fflib.AppendFloat(buf, float64(mj.Percent), 'g', -1, 64)
 	buf.WriteByte('}')
 	return nil
 }
@@ -535,12 +535,12 @@ const (
 
 	ffj_t_GameAchievement_Name
 
-	ffj_t_GameAchievement_Percentage
+	ffj_t_GameAchievement_Percent
 )
 
 var ffj_key_GameAchievement_Name = []byte("Name")
 
-var ffj_key_GameAchievement_Percentage = []byte("Percentage")
+var ffj_key_GameAchievement_Percent = []byte("Percent")
 
 func (uj *GameAchievement) UnmarshalJSON(input []byte) error {
 	fs := fflib.NewFFLexer(input)
@@ -611,16 +611,16 @@ mainparse:
 
 				case 'P':
 
-					if bytes.Equal(ffj_key_GameAchievement_Percentage, kn) {
-						currentKey = ffj_t_GameAchievement_Percentage
+					if bytes.Equal(ffj_key_GameAchievement_Percent, kn) {
+						currentKey = ffj_t_GameAchievement_Percent
 						state = fflib.FFParse_want_colon
 						goto mainparse
 					}
 
 				}
 
-				if fflib.SimpleLetterEqualFold(ffj_key_GameAchievement_Percentage, kn) {
-					currentKey = ffj_t_GameAchievement_Percentage
+				if fflib.SimpleLetterEqualFold(ffj_key_GameAchievement_Percent, kn) {
+					currentKey = ffj_t_GameAchievement_Percent
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
@@ -651,8 +651,8 @@ mainparse:
 				case ffj_t_GameAchievement_Name:
 					goto handle_Name
 
-				case ffj_t_GameAchievement_Percentage:
-					goto handle_Percentage
+				case ffj_t_GameAchievement_Percent:
+					goto handle_Percent
 
 				case ffj_t_GameAchievementno_such_key:
 					err = fs.SkipField(tok)
@@ -694,9 +694,9 @@ handle_Name:
 	state = fflib.FFParse_after_value
 	goto mainparse
 
-handle_Percentage:
+handle_Percent:
 
-	/* handler: uj.Percentage type=float64 kind=float64 quoted=false*/
+	/* handler: uj.Percent type=float64 kind=float64 quoted=false*/
 
 	{
 		if tok != fflib.FFTok_double && tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
@@ -716,7 +716,7 @@ handle_Percentage:
 				return fs.WrapErr(err)
 			}
 
-			uj.Percentage = float64(tval)
+			uj.Percent = float64(tval)
 
 		}
 	}
