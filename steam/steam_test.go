@@ -111,5 +111,15 @@ func Test_GetGlobalAchievementData(t *testing.T) {
 	if len(resp.AchievementPercentages.Achievements) < 15 {
 		t.Errorf("Expected 15 or more achievements, %d", len(resp.AchievementPercentages.Achievements))
 	}
+}
 
+func Test_GetGameSchema(t *testing.T) {
+	resp, err := api.GetSchemaForGame(432990)
+	if err != nil {
+		t.Errorf("Getting game schema failed, %s", err.Error())
+	}
+
+	if len(resp.Game.AvailableGameStats.Achievements) < 15 {
+		t.Errorf("Expected 15 or more achievements, %d", len(resp.Game.AvailableGameStats.Achievements))
+	}
 }

@@ -416,7 +416,7 @@ mainparse:
 
 handle_Achievements:
 
-	/* handler: uj.Achievements type=[]steam.Gameachievement kind=slice quoted=false*/
+	/* handler: uj.Achievements type=[]steam.GameAchievement kind=slice quoted=false*/
 
 	{
 
@@ -430,13 +430,13 @@ handle_Achievements:
 			uj.Achievements = nil
 		} else {
 
-			uj.Achievements = []Gameachievement{}
+			uj.Achievements = []GameAchievement{}
 
 			wantVal := true
 
 			for {
 
-				var tmp_uj__Achievements Gameachievement
+				var tmp_uj__Achievements GameAchievement
 
 				tok = fs.Scan()
 				if tok == fflib.FFTok_error {
@@ -457,7 +457,7 @@ handle_Achievements:
 					wantVal = true
 				}
 
-				/* handler: tmp_uj__Achievements type=steam.Gameachievement kind=struct quoted=false*/
+				/* handler: tmp_uj__Achievements type=steam.GameAchievement kind=struct quoted=false*/
 
 				{
 					if tok == fflib.FFTok_null {
@@ -477,6 +477,247 @@ handle_Achievements:
 
 				wantVal = false
 			}
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+wantedvalue:
+	return fs.WrapErr(fmt.Errorf("wanted value token, but got token: %v", tok))
+wrongtokenerror:
+	return fs.WrapErr(fmt.Errorf("ffjson: wanted token: %v, but got token: %v output=%s", wantedTok, tok, fs.Output.String()))
+tokerror:
+	if fs.BigError != nil {
+		return fs.WrapErr(fs.BigError)
+	}
+	err = fs.Error.ToError()
+	if err != nil {
+		return fs.WrapErr(err)
+	}
+	panic("ffjson-generated: unreachable, please report bug.")
+done:
+	return nil
+}
+
+func (mj *GameAchievement) MarshalJSON() ([]byte, error) {
+	var buf fflib.Buffer
+	if mj == nil {
+		buf.WriteString("null")
+		return buf.Bytes(), nil
+	}
+	err := mj.MarshalJSONBuf(&buf)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+func (mj *GameAchievement) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
+	if mj == nil {
+		buf.WriteString("null")
+		return nil
+	}
+	var err error
+	var obj []byte
+	_ = obj
+	_ = err
+	buf.WriteString(`{"Name":`)
+	fflib.WriteJsonString(buf, string(mj.Name))
+	buf.WriteString(`,"Percentage":`)
+	fflib.AppendFloat(buf, float64(mj.Percentage), 'g', -1, 64)
+	buf.WriteByte('}')
+	return nil
+}
+
+const (
+	ffj_t_GameAchievementbase = iota
+	ffj_t_GameAchievementno_such_key
+
+	ffj_t_GameAchievement_Name
+
+	ffj_t_GameAchievement_Percentage
+)
+
+var ffj_key_GameAchievement_Name = []byte("Name")
+
+var ffj_key_GameAchievement_Percentage = []byte("Percentage")
+
+func (uj *GameAchievement) UnmarshalJSON(input []byte) error {
+	fs := fflib.NewFFLexer(input)
+	return uj.UnmarshalJSONFFLexer(fs, fflib.FFParse_map_start)
+}
+
+func (uj *GameAchievement) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
+	var err error = nil
+	currentKey := ffj_t_GameAchievementbase
+	_ = currentKey
+	tok := fflib.FFTok_init
+	wantedTok := fflib.FFTok_init
+
+mainparse:
+	for {
+		tok = fs.Scan()
+		//	println(fmt.Sprintf("debug: tok: %v  state: %v", tok, state))
+		if tok == fflib.FFTok_error {
+			goto tokerror
+		}
+
+		switch state {
+
+		case fflib.FFParse_map_start:
+			if tok != fflib.FFTok_left_bracket {
+				wantedTok = fflib.FFTok_left_bracket
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_key
+			continue
+
+		case fflib.FFParse_after_value:
+			if tok == fflib.FFTok_comma {
+				state = fflib.FFParse_want_key
+			} else if tok == fflib.FFTok_right_bracket {
+				goto done
+			} else {
+				wantedTok = fflib.FFTok_comma
+				goto wrongtokenerror
+			}
+
+		case fflib.FFParse_want_key:
+			// json {} ended. goto exit. woo.
+			if tok == fflib.FFTok_right_bracket {
+				goto done
+			}
+			if tok != fflib.FFTok_string {
+				wantedTok = fflib.FFTok_string
+				goto wrongtokenerror
+			}
+
+			kn := fs.Output.Bytes()
+			if len(kn) <= 0 {
+				// "" case. hrm.
+				currentKey = ffj_t_GameAchievementno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			} else {
+				switch kn[0] {
+
+				case 'N':
+
+					if bytes.Equal(ffj_key_GameAchievement_Name, kn) {
+						currentKey = ffj_t_GameAchievement_Name
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				case 'P':
+
+					if bytes.Equal(ffj_key_GameAchievement_Percentage, kn) {
+						currentKey = ffj_t_GameAchievement_Percentage
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_GameAchievement_Percentage, kn) {
+					currentKey = ffj_t_GameAchievement_Percentage
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_GameAchievement_Name, kn) {
+					currentKey = ffj_t_GameAchievement_Name
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				currentKey = ffj_t_GameAchievementno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			}
+
+		case fflib.FFParse_want_colon:
+			if tok != fflib.FFTok_colon {
+				wantedTok = fflib.FFTok_colon
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_value
+			continue
+		case fflib.FFParse_want_value:
+
+			if tok == fflib.FFTok_left_brace || tok == fflib.FFTok_left_bracket || tok == fflib.FFTok_integer || tok == fflib.FFTok_double || tok == fflib.FFTok_string || tok == fflib.FFTok_bool || tok == fflib.FFTok_null {
+				switch currentKey {
+
+				case ffj_t_GameAchievement_Name:
+					goto handle_Name
+
+				case ffj_t_GameAchievement_Percentage:
+					goto handle_Percentage
+
+				case ffj_t_GameAchievementno_such_key:
+					err = fs.SkipField(tok)
+					if err != nil {
+						return fs.WrapErr(err)
+					}
+					state = fflib.FFParse_after_value
+					goto mainparse
+				}
+			} else {
+				goto wantedvalue
+			}
+		}
+	}
+
+handle_Name:
+
+	/* handler: uj.Name type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.Name = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_Percentage:
+
+	/* handler: uj.Percentage type=float64 kind=float64 quoted=false*/
+
+	{
+		if tok != fflib.FFTok_double && tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for float64", tok))
+		}
+	}
+
+	{
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			tval, err := fflib.ParseFloat(fs.Output.Bytes(), 64)
+
+			if err != nil {
+				return fs.WrapErr(err)
+			}
+
+			uj.Percentage = float64(tval)
+
 		}
 	}
 
@@ -691,7 +932,7 @@ done:
 	return nil
 }
 
-func (mj *Gameachievement) MarshalJSON() ([]byte, error) {
+func (mj *GameSchema) MarshalJSON() ([]byte, error) {
 	var buf fflib.Buffer
 	if mj == nil {
 		buf.WriteString("null")
@@ -703,7 +944,7 @@ func (mj *Gameachievement) MarshalJSON() ([]byte, error) {
 	}
 	return buf.Bytes(), nil
 }
-func (mj *Gameachievement) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
+func (mj *GameSchema) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	if mj == nil {
 		buf.WriteString("null")
 		return nil
@@ -712,35 +953,49 @@ func (mj *Gameachievement) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	var obj []byte
 	_ = obj
 	_ = err
-	buf.WriteString(`{"Name":`)
-	fflib.WriteJsonString(buf, string(mj.Name))
-	buf.WriteString(`,"Percentage":`)
-	fflib.AppendFloat(buf, float64(mj.Percentage), 'g', -1, 64)
+	buf.WriteString(`{"GameName":`)
+	fflib.WriteJsonString(buf, string(mj.GameName))
+	buf.WriteString(`,"GameVersion":`)
+	fflib.WriteJsonString(buf, string(mj.GameVersion))
+	buf.WriteString(`,"AvailableGameStats":`)
+
+	{
+
+		err = mj.AvailableGameStats.MarshalJSONBuf(buf)
+		if err != nil {
+			return err
+		}
+
+	}
 	buf.WriteByte('}')
 	return nil
 }
 
 const (
-	ffj_t_Gameachievementbase = iota
-	ffj_t_Gameachievementno_such_key
+	ffj_t_GameSchemabase = iota
+	ffj_t_GameSchemano_such_key
 
-	ffj_t_Gameachievement_Name
+	ffj_t_GameSchema_GameName
 
-	ffj_t_Gameachievement_Percentage
+	ffj_t_GameSchema_GameVersion
+
+	ffj_t_GameSchema_AvailableGameStats
 )
 
-var ffj_key_Gameachievement_Name = []byte("Name")
+var ffj_key_GameSchema_GameName = []byte("GameName")
 
-var ffj_key_Gameachievement_Percentage = []byte("Percentage")
+var ffj_key_GameSchema_GameVersion = []byte("GameVersion")
 
-func (uj *Gameachievement) UnmarshalJSON(input []byte) error {
+var ffj_key_GameSchema_AvailableGameStats = []byte("AvailableGameStats")
+
+func (uj *GameSchema) UnmarshalJSON(input []byte) error {
 	fs := fflib.NewFFLexer(input)
 	return uj.UnmarshalJSONFFLexer(fs, fflib.FFParse_map_start)
 }
 
-func (uj *Gameachievement) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
+func (uj *GameSchema) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
 	var err error = nil
-	currentKey := ffj_t_Gameachievementbase
+	currentKey := ffj_t_GameSchemabase
 	_ = currentKey
 	tok := fflib.FFTok_init
 	wantedTok := fflib.FFTok_init
@@ -786,43 +1041,54 @@ mainparse:
 			kn := fs.Output.Bytes()
 			if len(kn) <= 0 {
 				// "" case. hrm.
-				currentKey = ffj_t_Gameachievementno_such_key
+				currentKey = ffj_t_GameSchemano_such_key
 				state = fflib.FFParse_want_colon
 				goto mainparse
 			} else {
 				switch kn[0] {
 
-				case 'N':
+				case 'A':
 
-					if bytes.Equal(ffj_key_Gameachievement_Name, kn) {
-						currentKey = ffj_t_Gameachievement_Name
+					if bytes.Equal(ffj_key_GameSchema_AvailableGameStats, kn) {
+						currentKey = ffj_t_GameSchema_AvailableGameStats
 						state = fflib.FFParse_want_colon
 						goto mainparse
 					}
 
-				case 'P':
+				case 'G':
 
-					if bytes.Equal(ffj_key_Gameachievement_Percentage, kn) {
-						currentKey = ffj_t_Gameachievement_Percentage
+					if bytes.Equal(ffj_key_GameSchema_GameName, kn) {
+						currentKey = ffj_t_GameSchema_GameName
+						state = fflib.FFParse_want_colon
+						goto mainparse
+
+					} else if bytes.Equal(ffj_key_GameSchema_GameVersion, kn) {
+						currentKey = ffj_t_GameSchema_GameVersion
 						state = fflib.FFParse_want_colon
 						goto mainparse
 					}
 
 				}
 
-				if fflib.SimpleLetterEqualFold(ffj_key_Gameachievement_Percentage, kn) {
-					currentKey = ffj_t_Gameachievement_Percentage
+				if fflib.EqualFoldRight(ffj_key_GameSchema_AvailableGameStats, kn) {
+					currentKey = ffj_t_GameSchema_AvailableGameStats
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
 
-				if fflib.SimpleLetterEqualFold(ffj_key_Gameachievement_Name, kn) {
-					currentKey = ffj_t_Gameachievement_Name
+				if fflib.EqualFoldRight(ffj_key_GameSchema_GameVersion, kn) {
+					currentKey = ffj_t_GameSchema_GameVersion
 					state = fflib.FFParse_want_colon
 					goto mainparse
 				}
 
-				currentKey = ffj_t_Gameachievementno_such_key
+				if fflib.SimpleLetterEqualFold(ffj_key_GameSchema_GameName, kn) {
+					currentKey = ffj_t_GameSchema_GameName
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				currentKey = ffj_t_GameSchemano_such_key
 				state = fflib.FFParse_want_colon
 				goto mainparse
 			}
@@ -839,13 +1105,16 @@ mainparse:
 			if tok == fflib.FFTok_left_brace || tok == fflib.FFTok_left_bracket || tok == fflib.FFTok_integer || tok == fflib.FFTok_double || tok == fflib.FFTok_string || tok == fflib.FFTok_bool || tok == fflib.FFTok_null {
 				switch currentKey {
 
-				case ffj_t_Gameachievement_Name:
-					goto handle_Name
+				case ffj_t_GameSchema_GameName:
+					goto handle_GameName
 
-				case ffj_t_Gameachievement_Percentage:
-					goto handle_Percentage
+				case ffj_t_GameSchema_GameVersion:
+					goto handle_GameVersion
 
-				case ffj_t_Gameachievementno_such_key:
+				case ffj_t_GameSchema_AvailableGameStats:
+					goto handle_AvailableGameStats
+
+				case ffj_t_GameSchemano_such_key:
 					err = fs.SkipField(tok)
 					if err != nil {
 						return fs.WrapErr(err)
@@ -859,9 +1128,9 @@ mainparse:
 		}
 	}
 
-handle_Name:
+handle_GameName:
 
-	/* handler: uj.Name type=string kind=string quoted=false*/
+	/* handler: uj.GameName type=string kind=string quoted=false*/
 
 	{
 
@@ -877,7 +1146,7 @@ handle_Name:
 
 			outBuf := fs.Output.Bytes()
 
-			uj.Name = string(string(outBuf))
+			uj.GameName = string(string(outBuf))
 
 		}
 	}
@@ -885,31 +1154,48 @@ handle_Name:
 	state = fflib.FFParse_after_value
 	goto mainparse
 
-handle_Percentage:
+handle_GameVersion:
 
-	/* handler: uj.Percentage type=float64 kind=float64 quoted=false*/
+	/* handler: uj.GameVersion type=string kind=string quoted=false*/
 
 	{
-		if tok != fflib.FFTok_double && tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
-			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for float64", tok))
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
 		}
-	}
-
-	{
 
 		if tok == fflib.FFTok_null {
 
 		} else {
 
-			tval, err := fflib.ParseFloat(fs.Output.Bytes(), 64)
+			outBuf := fs.Output.Bytes()
 
-			if err != nil {
-				return fs.WrapErr(err)
-			}
-
-			uj.Percentage = float64(tval)
+			uj.GameVersion = string(string(outBuf))
 
 		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_AvailableGameStats:
+
+	/* handler: uj.AvailableGameStats type=steam.Stats kind=struct quoted=false*/
+
+	{
+		if tok == fflib.FFTok_null {
+
+			state = fflib.FFParse_after_value
+			goto mainparse
+		}
+
+		err = uj.AvailableGameStats.UnmarshalJSONFFLexer(fs, fflib.FFParse_want_key)
+		if err != nil {
+			return err
+		}
+		state = fflib.FFParse_after_value
 	}
 
 	state = fflib.FFParse_after_value
@@ -1490,6 +1776,928 @@ handle_Achievements:
 				}
 
 				/* handler: tmp_uj__Achievements type=steam.Achievement kind=struct quoted=false*/
+
+				{
+					if tok == fflib.FFTok_null {
+
+						state = fflib.FFParse_after_value
+						goto mainparse
+					}
+
+					err = tmp_uj__Achievements.UnmarshalJSONFFLexer(fs, fflib.FFParse_want_key)
+					if err != nil {
+						return err
+					}
+					state = fflib.FFParse_after_value
+				}
+
+				uj.Achievements = append(uj.Achievements, tmp_uj__Achievements)
+
+				wantVal = false
+			}
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+wantedvalue:
+	return fs.WrapErr(fmt.Errorf("wanted value token, but got token: %v", tok))
+wrongtokenerror:
+	return fs.WrapErr(fmt.Errorf("ffjson: wanted token: %v, but got token: %v output=%s", wantedTok, tok, fs.Output.String()))
+tokerror:
+	if fs.BigError != nil {
+		return fs.WrapErr(fs.BigError)
+	}
+	err = fs.Error.ToError()
+	if err != nil {
+		return fs.WrapErr(err)
+	}
+	panic("ffjson-generated: unreachable, please report bug.")
+done:
+	return nil
+}
+
+func (mj *SchemaAchievement) MarshalJSON() ([]byte, error) {
+	var buf fflib.Buffer
+	if mj == nil {
+		buf.WriteString("null")
+		return buf.Bytes(), nil
+	}
+	err := mj.MarshalJSONBuf(&buf)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+func (mj *SchemaAchievement) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
+	if mj == nil {
+		buf.WriteString("null")
+		return nil
+	}
+	var err error
+	var obj []byte
+	_ = obj
+	_ = err
+	buf.WriteString(`{"Name":`)
+	fflib.WriteJsonString(buf, string(mj.Name))
+	buf.WriteString(`,"DefaultValue":`)
+	fflib.FormatBits2(buf, uint64(mj.DefaultValue), 10, mj.DefaultValue < 0)
+	buf.WriteString(`,"DisplayName":`)
+	fflib.WriteJsonString(buf, string(mj.DisplayName))
+	buf.WriteString(`,"Hidden":`)
+	fflib.FormatBits2(buf, uint64(mj.Hidden), 10, mj.Hidden < 0)
+	buf.WriteString(`,"Description":`)
+	fflib.WriteJsonString(buf, string(mj.Description))
+	buf.WriteString(`,"Icon":`)
+	fflib.WriteJsonString(buf, string(mj.Icon))
+	buf.WriteString(`,"IconGray":`)
+	fflib.WriteJsonString(buf, string(mj.IconGray))
+	buf.WriteByte('}')
+	return nil
+}
+
+const (
+	ffj_t_SchemaAchievementbase = iota
+	ffj_t_SchemaAchievementno_such_key
+
+	ffj_t_SchemaAchievement_Name
+
+	ffj_t_SchemaAchievement_DefaultValue
+
+	ffj_t_SchemaAchievement_DisplayName
+
+	ffj_t_SchemaAchievement_Hidden
+
+	ffj_t_SchemaAchievement_Description
+
+	ffj_t_SchemaAchievement_Icon
+
+	ffj_t_SchemaAchievement_IconGray
+)
+
+var ffj_key_SchemaAchievement_Name = []byte("Name")
+
+var ffj_key_SchemaAchievement_DefaultValue = []byte("DefaultValue")
+
+var ffj_key_SchemaAchievement_DisplayName = []byte("DisplayName")
+
+var ffj_key_SchemaAchievement_Hidden = []byte("Hidden")
+
+var ffj_key_SchemaAchievement_Description = []byte("Description")
+
+var ffj_key_SchemaAchievement_Icon = []byte("Icon")
+
+var ffj_key_SchemaAchievement_IconGray = []byte("IconGray")
+
+func (uj *SchemaAchievement) UnmarshalJSON(input []byte) error {
+	fs := fflib.NewFFLexer(input)
+	return uj.UnmarshalJSONFFLexer(fs, fflib.FFParse_map_start)
+}
+
+func (uj *SchemaAchievement) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
+	var err error = nil
+	currentKey := ffj_t_SchemaAchievementbase
+	_ = currentKey
+	tok := fflib.FFTok_init
+	wantedTok := fflib.FFTok_init
+
+mainparse:
+	for {
+		tok = fs.Scan()
+		//	println(fmt.Sprintf("debug: tok: %v  state: %v", tok, state))
+		if tok == fflib.FFTok_error {
+			goto tokerror
+		}
+
+		switch state {
+
+		case fflib.FFParse_map_start:
+			if tok != fflib.FFTok_left_bracket {
+				wantedTok = fflib.FFTok_left_bracket
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_key
+			continue
+
+		case fflib.FFParse_after_value:
+			if tok == fflib.FFTok_comma {
+				state = fflib.FFParse_want_key
+			} else if tok == fflib.FFTok_right_bracket {
+				goto done
+			} else {
+				wantedTok = fflib.FFTok_comma
+				goto wrongtokenerror
+			}
+
+		case fflib.FFParse_want_key:
+			// json {} ended. goto exit. woo.
+			if tok == fflib.FFTok_right_bracket {
+				goto done
+			}
+			if tok != fflib.FFTok_string {
+				wantedTok = fflib.FFTok_string
+				goto wrongtokenerror
+			}
+
+			kn := fs.Output.Bytes()
+			if len(kn) <= 0 {
+				// "" case. hrm.
+				currentKey = ffj_t_SchemaAchievementno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			} else {
+				switch kn[0] {
+
+				case 'D':
+
+					if bytes.Equal(ffj_key_SchemaAchievement_DefaultValue, kn) {
+						currentKey = ffj_t_SchemaAchievement_DefaultValue
+						state = fflib.FFParse_want_colon
+						goto mainparse
+
+					} else if bytes.Equal(ffj_key_SchemaAchievement_DisplayName, kn) {
+						currentKey = ffj_t_SchemaAchievement_DisplayName
+						state = fflib.FFParse_want_colon
+						goto mainparse
+
+					} else if bytes.Equal(ffj_key_SchemaAchievement_Description, kn) {
+						currentKey = ffj_t_SchemaAchievement_Description
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				case 'H':
+
+					if bytes.Equal(ffj_key_SchemaAchievement_Hidden, kn) {
+						currentKey = ffj_t_SchemaAchievement_Hidden
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				case 'I':
+
+					if bytes.Equal(ffj_key_SchemaAchievement_Icon, kn) {
+						currentKey = ffj_t_SchemaAchievement_Icon
+						state = fflib.FFParse_want_colon
+						goto mainparse
+
+					} else if bytes.Equal(ffj_key_SchemaAchievement_IconGray, kn) {
+						currentKey = ffj_t_SchemaAchievement_IconGray
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				case 'N':
+
+					if bytes.Equal(ffj_key_SchemaAchievement_Name, kn) {
+						currentKey = ffj_t_SchemaAchievement_Name
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_SchemaAchievement_IconGray, kn) {
+					currentKey = ffj_t_SchemaAchievement_IconGray
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_SchemaAchievement_Icon, kn) {
+					currentKey = ffj_t_SchemaAchievement_Icon
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.EqualFoldRight(ffj_key_SchemaAchievement_Description, kn) {
+					currentKey = ffj_t_SchemaAchievement_Description
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_SchemaAchievement_Hidden, kn) {
+					currentKey = ffj_t_SchemaAchievement_Hidden
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.EqualFoldRight(ffj_key_SchemaAchievement_DisplayName, kn) {
+					currentKey = ffj_t_SchemaAchievement_DisplayName
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_SchemaAchievement_DefaultValue, kn) {
+					currentKey = ffj_t_SchemaAchievement_DefaultValue
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_SchemaAchievement_Name, kn) {
+					currentKey = ffj_t_SchemaAchievement_Name
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				currentKey = ffj_t_SchemaAchievementno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			}
+
+		case fflib.FFParse_want_colon:
+			if tok != fflib.FFTok_colon {
+				wantedTok = fflib.FFTok_colon
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_value
+			continue
+		case fflib.FFParse_want_value:
+
+			if tok == fflib.FFTok_left_brace || tok == fflib.FFTok_left_bracket || tok == fflib.FFTok_integer || tok == fflib.FFTok_double || tok == fflib.FFTok_string || tok == fflib.FFTok_bool || tok == fflib.FFTok_null {
+				switch currentKey {
+
+				case ffj_t_SchemaAchievement_Name:
+					goto handle_Name
+
+				case ffj_t_SchemaAchievement_DefaultValue:
+					goto handle_DefaultValue
+
+				case ffj_t_SchemaAchievement_DisplayName:
+					goto handle_DisplayName
+
+				case ffj_t_SchemaAchievement_Hidden:
+					goto handle_Hidden
+
+				case ffj_t_SchemaAchievement_Description:
+					goto handle_Description
+
+				case ffj_t_SchemaAchievement_Icon:
+					goto handle_Icon
+
+				case ffj_t_SchemaAchievement_IconGray:
+					goto handle_IconGray
+
+				case ffj_t_SchemaAchievementno_such_key:
+					err = fs.SkipField(tok)
+					if err != nil {
+						return fs.WrapErr(err)
+					}
+					state = fflib.FFParse_after_value
+					goto mainparse
+				}
+			} else {
+				goto wantedvalue
+			}
+		}
+	}
+
+handle_Name:
+
+	/* handler: uj.Name type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.Name = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_DefaultValue:
+
+	/* handler: uj.DefaultValue type=int kind=int quoted=false*/
+
+	{
+		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int", tok))
+		}
+	}
+
+	{
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
+
+			if err != nil {
+				return fs.WrapErr(err)
+			}
+
+			uj.DefaultValue = int(tval)
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_DisplayName:
+
+	/* handler: uj.DisplayName type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.DisplayName = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_Hidden:
+
+	/* handler: uj.Hidden type=int kind=int quoted=false*/
+
+	{
+		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int", tok))
+		}
+	}
+
+	{
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
+
+			if err != nil {
+				return fs.WrapErr(err)
+			}
+
+			uj.Hidden = int(tval)
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_Description:
+
+	/* handler: uj.Description type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.Description = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_Icon:
+
+	/* handler: uj.Icon type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.Icon = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+handle_IconGray:
+
+	/* handler: uj.IconGray type=string kind=string quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_string && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for string", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+
+		} else {
+
+			outBuf := fs.Output.Bytes()
+
+			uj.IconGray = string(string(outBuf))
+
+		}
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+wantedvalue:
+	return fs.WrapErr(fmt.Errorf("wanted value token, but got token: %v", tok))
+wrongtokenerror:
+	return fs.WrapErr(fmt.Errorf("ffjson: wanted token: %v, but got token: %v output=%s", wantedTok, tok, fs.Output.String()))
+tokerror:
+	if fs.BigError != nil {
+		return fs.WrapErr(fs.BigError)
+	}
+	err = fs.Error.ToError()
+	if err != nil {
+		return fs.WrapErr(err)
+	}
+	panic("ffjson-generated: unreachable, please report bug.")
+done:
+	return nil
+}
+
+func (mj *SchemaResp) MarshalJSON() ([]byte, error) {
+	var buf fflib.Buffer
+	if mj == nil {
+		buf.WriteString("null")
+		return buf.Bytes(), nil
+	}
+	err := mj.MarshalJSONBuf(&buf)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+func (mj *SchemaResp) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
+	if mj == nil {
+		buf.WriteString("null")
+		return nil
+	}
+	var err error
+	var obj []byte
+	_ = obj
+	_ = err
+	buf.WriteString(`{"Game":`)
+
+	{
+
+		err = mj.Game.MarshalJSONBuf(buf)
+		if err != nil {
+			return err
+		}
+
+	}
+	buf.WriteByte('}')
+	return nil
+}
+
+const (
+	ffj_t_SchemaRespbase = iota
+	ffj_t_SchemaRespno_such_key
+
+	ffj_t_SchemaResp_Game
+)
+
+var ffj_key_SchemaResp_Game = []byte("Game")
+
+func (uj *SchemaResp) UnmarshalJSON(input []byte) error {
+	fs := fflib.NewFFLexer(input)
+	return uj.UnmarshalJSONFFLexer(fs, fflib.FFParse_map_start)
+}
+
+func (uj *SchemaResp) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
+	var err error = nil
+	currentKey := ffj_t_SchemaRespbase
+	_ = currentKey
+	tok := fflib.FFTok_init
+	wantedTok := fflib.FFTok_init
+
+mainparse:
+	for {
+		tok = fs.Scan()
+		//	println(fmt.Sprintf("debug: tok: %v  state: %v", tok, state))
+		if tok == fflib.FFTok_error {
+			goto tokerror
+		}
+
+		switch state {
+
+		case fflib.FFParse_map_start:
+			if tok != fflib.FFTok_left_bracket {
+				wantedTok = fflib.FFTok_left_bracket
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_key
+			continue
+
+		case fflib.FFParse_after_value:
+			if tok == fflib.FFTok_comma {
+				state = fflib.FFParse_want_key
+			} else if tok == fflib.FFTok_right_bracket {
+				goto done
+			} else {
+				wantedTok = fflib.FFTok_comma
+				goto wrongtokenerror
+			}
+
+		case fflib.FFParse_want_key:
+			// json {} ended. goto exit. woo.
+			if tok == fflib.FFTok_right_bracket {
+				goto done
+			}
+			if tok != fflib.FFTok_string {
+				wantedTok = fflib.FFTok_string
+				goto wrongtokenerror
+			}
+
+			kn := fs.Output.Bytes()
+			if len(kn) <= 0 {
+				// "" case. hrm.
+				currentKey = ffj_t_SchemaRespno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			} else {
+				switch kn[0] {
+
+				case 'G':
+
+					if bytes.Equal(ffj_key_SchemaResp_Game, kn) {
+						currentKey = ffj_t_SchemaResp_Game
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				}
+
+				if fflib.SimpleLetterEqualFold(ffj_key_SchemaResp_Game, kn) {
+					currentKey = ffj_t_SchemaResp_Game
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				currentKey = ffj_t_SchemaRespno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			}
+
+		case fflib.FFParse_want_colon:
+			if tok != fflib.FFTok_colon {
+				wantedTok = fflib.FFTok_colon
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_value
+			continue
+		case fflib.FFParse_want_value:
+
+			if tok == fflib.FFTok_left_brace || tok == fflib.FFTok_left_bracket || tok == fflib.FFTok_integer || tok == fflib.FFTok_double || tok == fflib.FFTok_string || tok == fflib.FFTok_bool || tok == fflib.FFTok_null {
+				switch currentKey {
+
+				case ffj_t_SchemaResp_Game:
+					goto handle_Game
+
+				case ffj_t_SchemaRespno_such_key:
+					err = fs.SkipField(tok)
+					if err != nil {
+						return fs.WrapErr(err)
+					}
+					state = fflib.FFParse_after_value
+					goto mainparse
+				}
+			} else {
+				goto wantedvalue
+			}
+		}
+	}
+
+handle_Game:
+
+	/* handler: uj.Game type=steam.GameSchema kind=struct quoted=false*/
+
+	{
+		if tok == fflib.FFTok_null {
+
+			state = fflib.FFParse_after_value
+			goto mainparse
+		}
+
+		err = uj.Game.UnmarshalJSONFFLexer(fs, fflib.FFParse_want_key)
+		if err != nil {
+			return err
+		}
+		state = fflib.FFParse_after_value
+	}
+
+	state = fflib.FFParse_after_value
+	goto mainparse
+
+wantedvalue:
+	return fs.WrapErr(fmt.Errorf("wanted value token, but got token: %v", tok))
+wrongtokenerror:
+	return fs.WrapErr(fmt.Errorf("ffjson: wanted token: %v, but got token: %v output=%s", wantedTok, tok, fs.Output.String()))
+tokerror:
+	if fs.BigError != nil {
+		return fs.WrapErr(fs.BigError)
+	}
+	err = fs.Error.ToError()
+	if err != nil {
+		return fs.WrapErr(err)
+	}
+	panic("ffjson-generated: unreachable, please report bug.")
+done:
+	return nil
+}
+
+func (mj *Stats) MarshalJSON() ([]byte, error) {
+	var buf fflib.Buffer
+	if mj == nil {
+		buf.WriteString("null")
+		return buf.Bytes(), nil
+	}
+	err := mj.MarshalJSONBuf(&buf)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+func (mj *Stats) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
+	if mj == nil {
+		buf.WriteString("null")
+		return nil
+	}
+	var err error
+	var obj []byte
+	_ = obj
+	_ = err
+	buf.WriteString(`{"Achievements":`)
+	if mj.Achievements != nil {
+		buf.WriteString(`[`)
+		for i, v := range mj.Achievements {
+			if i != 0 {
+				buf.WriteString(`,`)
+			}
+
+			{
+
+				err = v.MarshalJSONBuf(buf)
+				if err != nil {
+					return err
+				}
+
+			}
+		}
+		buf.WriteString(`]`)
+	} else {
+		buf.WriteString(`null`)
+	}
+	buf.WriteByte('}')
+	return nil
+}
+
+const (
+	ffj_t_Statsbase = iota
+	ffj_t_Statsno_such_key
+
+	ffj_t_Stats_Achievements
+)
+
+var ffj_key_Stats_Achievements = []byte("Achievements")
+
+func (uj *Stats) UnmarshalJSON(input []byte) error {
+	fs := fflib.NewFFLexer(input)
+	return uj.UnmarshalJSONFFLexer(fs, fflib.FFParse_map_start)
+}
+
+func (uj *Stats) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
+	var err error = nil
+	currentKey := ffj_t_Statsbase
+	_ = currentKey
+	tok := fflib.FFTok_init
+	wantedTok := fflib.FFTok_init
+
+mainparse:
+	for {
+		tok = fs.Scan()
+		//	println(fmt.Sprintf("debug: tok: %v  state: %v", tok, state))
+		if tok == fflib.FFTok_error {
+			goto tokerror
+		}
+
+		switch state {
+
+		case fflib.FFParse_map_start:
+			if tok != fflib.FFTok_left_bracket {
+				wantedTok = fflib.FFTok_left_bracket
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_key
+			continue
+
+		case fflib.FFParse_after_value:
+			if tok == fflib.FFTok_comma {
+				state = fflib.FFParse_want_key
+			} else if tok == fflib.FFTok_right_bracket {
+				goto done
+			} else {
+				wantedTok = fflib.FFTok_comma
+				goto wrongtokenerror
+			}
+
+		case fflib.FFParse_want_key:
+			// json {} ended. goto exit. woo.
+			if tok == fflib.FFTok_right_bracket {
+				goto done
+			}
+			if tok != fflib.FFTok_string {
+				wantedTok = fflib.FFTok_string
+				goto wrongtokenerror
+			}
+
+			kn := fs.Output.Bytes()
+			if len(kn) <= 0 {
+				// "" case. hrm.
+				currentKey = ffj_t_Statsno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			} else {
+				switch kn[0] {
+
+				case 'A':
+
+					if bytes.Equal(ffj_key_Stats_Achievements, kn) {
+						currentKey = ffj_t_Stats_Achievements
+						state = fflib.FFParse_want_colon
+						goto mainparse
+					}
+
+				}
+
+				if fflib.EqualFoldRight(ffj_key_Stats_Achievements, kn) {
+					currentKey = ffj_t_Stats_Achievements
+					state = fflib.FFParse_want_colon
+					goto mainparse
+				}
+
+				currentKey = ffj_t_Statsno_such_key
+				state = fflib.FFParse_want_colon
+				goto mainparse
+			}
+
+		case fflib.FFParse_want_colon:
+			if tok != fflib.FFTok_colon {
+				wantedTok = fflib.FFTok_colon
+				goto wrongtokenerror
+			}
+			state = fflib.FFParse_want_value
+			continue
+		case fflib.FFParse_want_value:
+
+			if tok == fflib.FFTok_left_brace || tok == fflib.FFTok_left_bracket || tok == fflib.FFTok_integer || tok == fflib.FFTok_double || tok == fflib.FFTok_string || tok == fflib.FFTok_bool || tok == fflib.FFTok_null {
+				switch currentKey {
+
+				case ffj_t_Stats_Achievements:
+					goto handle_Achievements
+
+				case ffj_t_Statsno_such_key:
+					err = fs.SkipField(tok)
+					if err != nil {
+						return fs.WrapErr(err)
+					}
+					state = fflib.FFParse_after_value
+					goto mainparse
+				}
+			} else {
+				goto wantedvalue
+			}
+		}
+	}
+
+handle_Achievements:
+
+	/* handler: uj.Achievements type=[]steam.SchemaAchievement kind=slice quoted=false*/
+
+	{
+
+		{
+			if tok != fflib.FFTok_left_brace && tok != fflib.FFTok_null {
+				return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for ", tok))
+			}
+		}
+
+		if tok == fflib.FFTok_null {
+			uj.Achievements = nil
+		} else {
+
+			uj.Achievements = []SchemaAchievement{}
+
+			wantVal := true
+
+			for {
+
+				var tmp_uj__Achievements SchemaAchievement
+
+				tok = fs.Scan()
+				if tok == fflib.FFTok_error {
+					goto tokerror
+				}
+				if tok == fflib.FFTok_right_brace {
+					break
+				}
+
+				if tok == fflib.FFTok_comma {
+					if wantVal == true {
+						// TODO(pquerna): this isn't an ideal error message, this handles
+						// things like [,,,] as an array value.
+						return fs.WrapErr(fmt.Errorf("wanted value token, but got token: %v", tok))
+					}
+					continue
+				} else {
+					wantVal = true
+				}
+
+				/* handler: tmp_uj__Achievements type=steam.SchemaAchievement kind=struct quoted=false*/
 
 				{
 					if tok == fflib.FFTok_null {

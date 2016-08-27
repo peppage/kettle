@@ -61,3 +61,41 @@ func (api *Steam) GetGlobalAchievementPercentagesForApp(id int64) (resp GameAchi
 	}
 	return resp, (<-response_ch).err
 }
+
+type SchemaResp struct {
+	Game GameSchema
+}
+
+type GameSchema struct {
+	GameName           string
+	GameVersion        string
+	AvailableGameStats Stats
+}
+
+type Stats struct {
+	Achievements []SchemaAchievement
+}
+
+type SchemaAchievement struct {
+	Name         string
+	DefaultValue int
+	DisplayName  string
+	Hidden       int
+	Description  string
+	Icon         string
+	IconGray     string
+}
+
+func (api *Steam) GetSchemaForGame(id int64) (resp SchemaResp, err error) {
+	v := url.Values{}
+	v.Set("appid", strconv.FormatInt(id, 10))
+
+	response_ch := make(chan response)
+	api.queryQueue <- query{
+		url:         api.baseUrl + "/ISteamUserStats/GetSchemaForGame/v2",
+		form:        v,
+		data:        &resp,
+		response_ch: response_ch,
+	}
+	return resp, (<-response_ch).err
+}
