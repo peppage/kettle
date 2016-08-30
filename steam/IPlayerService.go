@@ -17,8 +17,8 @@ type OGResponse struct {
 type UserGame struct {
 	AppID           int64  `json:"appid"`
 	Name            string `json:"name,omitempty"`
-	Playtime2Weeks  int64  `json:"playtime_2weeks"`
-	PlaytimeForever int64  `json:"playtime_forever"`
+	Playtime2Weeks  int32  `json:"playtime_2weeks"`
+	PlaytimeForever int32  `json:"playtime_forever"`
 	ImgIconUrl      string `json:"img_icon_url,omitempty"`
 	ImgLogoUrl      string `json:"img_logo_url,omitempty"`
 	VisibleStats    bool   `json:"has_community_visible_stats,omitempty"`

@@ -856,11 +856,11 @@ handle_Name:
 
 handle_Playtime2Weeks:
 
-	/* handler: uj.Playtime2Weeks type=int64 kind=int64 quoted=false*/
+	/* handler: uj.Playtime2Weeks type=int32 kind=int32 quoted=false*/
 
 	{
 		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
-			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int64", tok))
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int32", tok))
 		}
 	}
 
@@ -870,13 +870,13 @@ handle_Playtime2Weeks:
 
 		} else {
 
-			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 32)
 
 			if err != nil {
 				return fs.WrapErr(err)
 			}
 
-			uj.Playtime2Weeks = int64(tval)
+			uj.Playtime2Weeks = int32(tval)
 
 		}
 	}
@@ -886,11 +886,11 @@ handle_Playtime2Weeks:
 
 handle_PlaytimeForever:
 
-	/* handler: uj.PlaytimeForever type=int64 kind=int64 quoted=false*/
+	/* handler: uj.PlaytimeForever type=int32 kind=int32 quoted=false*/
 
 	{
 		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
-			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int64", tok))
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int32", tok))
 		}
 	}
 
@@ -900,13 +900,13 @@ handle_PlaytimeForever:
 
 		} else {
 
-			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 32)
 
 			if err != nil {
 				return fs.WrapErr(err)
 			}
 
-			uj.PlaytimeForever = int64(tval)
+			uj.PlaytimeForever = int32(tval)
 
 		}
 	}
