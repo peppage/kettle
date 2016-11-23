@@ -242,7 +242,7 @@ handle_Games:
 			uj.Games = nil
 		} else {
 
-			uj.Games = []UserGame{}
+			uj.Games = make([]UserGame, 0)
 
 			wantVal := true
 
@@ -286,7 +286,6 @@ handle_Games:
 				}
 
 				uj.Games = append(uj.Games, tmp_uj__Games)
-
 				wantVal = false
 			}
 		}
@@ -886,11 +885,11 @@ handle_Playtime2Weeks:
 
 handle_PlaytimeForever:
 
-	/* handler: uj.PlaytimeForever type=int32 kind=int32 quoted=false*/
+	/* handler: uj.PlaytimeForever type=int kind=int quoted=false*/
 
 	{
 		if tok != fflib.FFTok_integer && tok != fflib.FFTok_null {
-			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int32", tok))
+			return fs.WrapErr(fmt.Errorf("cannot unmarshal %s into Go value for int", tok))
 		}
 	}
 
@@ -900,13 +899,13 @@ handle_PlaytimeForever:
 
 		} else {
 
-			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 32)
+			tval, err := fflib.ParseInt(fs.Output.Bytes(), 10, 64)
 
 			if err != nil {
 				return fs.WrapErr(err)
 			}
 
-			uj.PlaytimeForever = int32(tval)
+			uj.PlaytimeForever = int(tval)
 
 		}
 	}
