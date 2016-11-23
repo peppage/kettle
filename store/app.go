@@ -12,6 +12,21 @@ type AppDetails struct {
 	AppData `json:"data"`
 }
 
+type GenreID string
+
+const (
+	EarlyAccess = GenreID("70")
+)
+
+func (details AppDetails) HasGenre(id GenreID) bool {
+	for _, g := range details.Genres {
+		if g.ID == string(id) {
+			return true
+		}
+	}
+	return false
+}
+
 type AppData struct {
 	Type                string         `json:"type"`
 	Name                string         `json:"name"`
