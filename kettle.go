@@ -14,6 +14,7 @@ type Client struct {
 	IPlayerService    *IPlayerService
 	ISteamAppsService *ISteamAppsService
 	ISteamNewsService *ISteamNewsService
+	ISteamUserService *ISteamUserService
 }
 
 // NewClient returns a new Client
@@ -33,6 +34,7 @@ func NewClient(httpClient *http.Client, key string) *Client {
 		IPlayerService:    newIPlayerService(apiBase.New()),
 		ISteamAppsService: newISteamAppsService(apiBase.New()),
 		ISteamNewsService: newISteamNewsService(apiBase.New()),
+		ISteamUserService: newISteamUserService(apiBase.New()),
 	}
 }
 
