@@ -49,6 +49,7 @@ type NewsItem struct {
 
 // GetNewsForApp returns the latest of a game specified by its appID.
 // https://developer.valvesoftware.com/wiki/Steam_Web_API#GetNewsForApp_.28v0002.29
+// https://wiki.teamfortress.com/wiki/WebAPI/GetNewsForApp
 func (s *ISteamNewsService) GetNewsForApp(params *GetNewsForAppParams) ([]NewsItem, *http.Response, error) {
 	response := new(newsResponse)
 

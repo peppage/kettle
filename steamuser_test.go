@@ -40,5 +40,38 @@ func TestISteamUserServiceGetFriendList(t *testing.T) {
 	assert.Equal(t, "76561197960412202", friends[0].SteamID)
 	assert.Equal(t, "friend", friends[0].Relationship)
 	assert.Equal(t, int64(1379557878), friends[0].FriendSince)
+}
 
+func TestISteamUserServiceResolveVanityURL(t *testing.T) {
+	const filePath = "./json/isteamuser/resolvevanityurl.json"
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/ResolveVanityURL/v1/", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "GET", r)
+
+		assertQuery(t, map[string]string{
+			"key":       "",
+			"vanityurl": "nelipot",
+			"url_type":  "2",
+		}, r)
+
+		b, err := getTestFile(filePath)
+		if err != nil {
+			t.Fatalf("Failed to open testfile %s", filePath)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(b)
+	})
+
+	client := NewClient(httpClient, "")
+	resp, _, err := client.ISteamUserService.ResolveVanityURL(&ResolveVanityURLParams{
+		VanityURL: "nelipot",
+		URLType:   Group,
+	})
+
+	assert.Nil(t, err)
+	assert.Equal(t, "103582791431962114", resp.SteamID)
+	assert.Equal(t, 1, resp.Success)
 }
