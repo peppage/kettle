@@ -18,11 +18,10 @@ func newISteamAppsService(sling *sling.Sling) *ISteamAppsService {
 }
 
 type appListResponse struct {
-	AppList AppList `json:"applist"`
+	AppList appList `json:"applist"`
 }
 
-// AppList is the list of apps from the ISteamAppsService.GetAppList
-type AppList struct {
+type appList struct {
 	Apps []App `json:"apps"`
 }
 
@@ -34,10 +33,10 @@ type App struct {
 
 // GetAppList returns a list of all apps on steam
 // https://wiki.teamfortress.com/wiki/WebAPI/GetAppList
-func (s *ISteamAppsService) GetAppList() (*AppList, *http.Response, error) {
+func (s *ISteamAppsService) GetAppList() ([]App, *http.Response, error) {
 	response := new(appListResponse)
 
 	resp, err := s.sling.New().Get("GetAppList/v2/").Receive(response, response)
 
-	return &response.AppList, resp, err
+	return response.AppList.Apps, resp, err
 }

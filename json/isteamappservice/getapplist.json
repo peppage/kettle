@@ -1,0 +1,27 @@
+{
+	"applist": {
+		"apps": [
+			{
+				"appid": 5,
+				"name": "Dedicated Server"
+			},
+			{
+				"appid": 7,
+				"name": "Steam Client"
+			},
+			{
+				"appid": 8,
+				"name": "winui2"
+			},
+			{
+				"appid": 10,
+				"name": "Counter-Strike"
+			},
+			{
+				"appid": 20,
+				"name": "Team Fortress Classic"
+			}
+		]
+		
+	}
+}
