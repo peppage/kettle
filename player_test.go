@@ -8,7 +8,7 @@ import (
 )
 
 func TestIPlayerServiceGetOwnedGames(t *testing.T) {
-	const filePath = "./json/iplayerservice/ownedgames.simple.json"
+	const filePath = "./json/iplayerservice/ownedgames.complete.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
