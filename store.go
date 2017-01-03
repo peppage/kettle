@@ -10,7 +10,7 @@ import (
 	"github.com/dghubble/sling"
 )
 
-// StoreService provies a method for accessing Steam store endpoints
+// StoreService provides a method for accessing Steam store endpoints
 type StoreService struct {
 	sling *sling.Sling
 }

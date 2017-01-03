@@ -10,14 +10,18 @@ import (
 type Client struct {
 	sling *sling.Sling
 
-	Store *StoreService
+	Store          *StoreService
+	IPlayerService *IPlayerService
 }
 
 // NewClient returns a new Client
 func NewClient(httpClient *http.Client, key string) *Client {
 	b := sling.New().Client(httpClient)
+
+	apiBase := b.New().Base("http://api.steampowered.com/")
 	return &Client{
-		sling: b,
-		Store: newStoreService(b.New().Base("http://store.steampowered.com/api/")),
+		sling:          b,
+		Store:          newStoreService(b.New().Base("http://store.steampowered.com/api/")),
+		IPlayerService: newIPlayerService(apiBase.New()),
 	}
 }
