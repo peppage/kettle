@@ -1,111 +1,61 @@
-package kettle_test
+package kettle
 
 import (
+	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"net/url"
 	"os"
-	"strconv"
 	"testing"
-	"time"
 
-	"kettle"
-	"kettle/steam"
-	"kettle/store"
+	"github.com/stretchr/testify/assert"
 )
 
-var KEY = os.Getenv("STEAM_KEY")
-
-var api *steam.Steam
-var storeApi *store.Store
-
-const steamID = int64(76561198006575550)
-const vanityName = "Peppage"
-
-func init() {
-	api = kettle.NewSteamApi(KEY)
-	api.EnableThrottling(2*time.Second, 1)
-	storeApi = kettle.NewStoreApi()
+func testServer() (*http.Client, *http.ServeMux, *httptest.Server) {
+	mux := http.NewServeMux()
+	server := httptest.NewServer(mux)
+	transport := &RewriteTransport{&http.Transport{
+		Proxy: func(req *http.Request) (*url.URL, error) {
+			return url.Parse(server.URL)
+		},
+	}}
+	client := &http.Client{Transport: transport}
+	return client, mux, server
 }
 
-func Test_GetApps(t *testing.T) {
-	games, err := api.GetAppList()
-	if err != nil {
-		t.Errorf("Getting all the games failed: %s", err.Error())
-	}
-
-	totalNewsItems := len(games.Applist.Apps)
-	if totalNewsItems < 100 {
-		t.Fatalf("Expected more than 100 apps, found %d", totalNewsItems)
-	}
+type RewriteTransport struct {
+	Transport http.RoundTripper
 }
 
-func Test_GetNews(t *testing.T) {
-	news, err := api.GetNewsForApp(242760, url.Values{})
-	if err != nil {
-		t.Errorf("Getting news failed: %s", err.Error())
+func (t *RewriteTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	req.URL.Scheme = "http"
+	if t.Transport == nil {
+		return http.DefaultTransport.RoundTrip(req)
 	}
-
-	totalNewsItems := len(news.AppNews.NewsItems)
-	if totalNewsItems < 2 {
-		t.Fatalf("Expecting more than 2 news items, found %d", totalNewsItems)
-	}
+	return t.Transport.RoundTrip(req)
 }
 
-func Test_GetFriends(t *testing.T) {
-	friends, err := api.GetFriendList(steamID, url.Values{})
-	if err != nil {
-		t.Errorf("Getting friends list failed: %s", err.Error())
-	}
-
-	totalFriends := len(friends.FriendsList.Friends)
-	if totalFriends < 2 {
-		t.Fatalf("Expecting more than 2 friends, found %d", totalFriends)
-	}
+func assertMethod(t *testing.T, expectedMethod string, req *http.Request) {
+	assert.Equal(t, expectedMethod, req.Method)
 }
 
-func Test_PlayerSummaries(t *testing.T) {
-	summary, err := api.GetPlayerSummaries([]int64{steamID})
-	if err != nil {
-		t.Errorf("Getting player summary failed: %s", err.Error())
+// assertQuery tests that the Request has the expected url query key/val pairs
+func assertQuery(t *testing.T, expected map[string]string, req *http.Request) {
+	queryValues := req.URL.Query()
+	expectedValues := url.Values{}
+	for key, value := range expected {
+		expectedValues.Add(key, value)
 	}
-
-	if summary.Players[0].SteamID != strconv.FormatInt(steamID, 10) {
-		t.Fatalf("Expecting steam IDs to match, got %s", summary.Players[0].SteamID)
-	}
+	assert.Equal(t, expectedValues, queryValues)
 }
 
-func Test_PlayerVanity(t *testing.T) {
-	vanityResp, err := api.ResolveVanityURL(vanityName)
+func getTestFile(path string) ([]byte, error) {
+	// Open file with sample json
+	f, err := os.Open(path)
 	if err != nil {
-		t.Errorf("Getting player vanity failed: %s", err.Error())
+		return nil, err
 	}
+	defer f.Close()
 
-	if vanityResp.SteamID != strconv.FormatInt(steamID, 10) {
-		t.Fatalf("Expecting my Steam ID, got %s", vanityResp.SteamID)
-	}
-}
-
-func Test_GetOwnedGames(t *testing.T) {
-	ownedResp, err := api.GetOwnedGames(steamID, url.Values{})
-	if err != nil {
-		t.Errorf("Getting owned games failed: %s", err.Error())
-	}
-
-	if ownedResp.GameCount < 263 {
-		t.Fatalf("Expected owned games larger or equal to 263, got %d", ownedResp.GameCount)
-	}
-}
-
-func Test_AppDetails(t *testing.T) {
-	details, err := storeApi.GetAppDetails(49520, url.Values{})
-	if err != nil {
-		t.Errorf("Getting app data failed: %s", err.Error())
-	}
-
-	if !details["49520"].Success {
-		t.Fatal("Expected a successful hit")
-	}
-
-	if details["49520"].Name != "Borderlands 2" {
-		t.Fatalf("Expected title Borderlands 2 got, %s", details["49520"].Name)
-	}
+	return ioutil.ReadAll(f)
 }
