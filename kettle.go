@@ -18,10 +18,25 @@ type Client struct {
 func NewClient(httpClient *http.Client, key string) *Client {
 	b := sling.New().Client(httpClient)
 
-	apiBase := b.New().Base("http://api.steampowered.com/")
+	apiBase := b.New().Base("https://api.steampowered.com/")
+	apiBase.QueryStruct(struct {
+		Key string `url:"key"`
+	}{
+		Key: key,
+	})
+
 	return &Client{
 		sling:          b,
-		Store:          newStoreService(b.New().Base("http://store.steampowered.com/api/")),
+		Store:          newStoreService(b.New().Base("https://store.steampowered.com/api/")),
 		IPlayerService: newIPlayerService(apiBase.New()),
 	}
 }
+
+// BoolAsAnInt is a bool that needs to be an int when transferred to an endpoint
+type BoolAsAnInt int
+
+// Option available for BoolAsAnInt
+const (
+	False = BoolAsAnInt(0)
+	True  = BoolAsAnInt(1)
+)
