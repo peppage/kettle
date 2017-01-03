@@ -13,6 +13,7 @@ type Client struct {
 	Store             *StoreService
 	IPlayerService    *IPlayerService
 	ISteamAppsService *ISteamAppsService
+	ISteamNewsService *ISteamNewsService
 }
 
 // NewClient returns a new Client
@@ -31,6 +32,7 @@ func NewClient(httpClient *http.Client, key string) *Client {
 		Store:             newStoreService(b.New().Base("https://store.steampowered.com/api/")),
 		IPlayerService:    newIPlayerService(apiBase.New()),
 		ISteamAppsService: newISteamAppsService(apiBase.New()),
+		ISteamNewsService: newISteamNewsService(apiBase.New()),
 	}
 }
 

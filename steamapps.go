@@ -36,7 +36,7 @@ type App struct {
 func (s *ISteamAppsService) GetAppList() ([]App, *http.Response, error) {
 	response := new(appListResponse)
 
-	resp, err := s.sling.New().Get("GetAppList/v2/").Receive(response, response)
+	resp, err := s.sling.New().Get("GetAppList/v2/").ReceiveSuccess(response)
 
 	return response.AppList.Apps, resp, err
 }
