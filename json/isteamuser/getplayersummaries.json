@@ -1,0 +1,62 @@
+{
+	"response": {
+		"players": [
+            {
+				"steamid": "76561197977122693",
+				"communityvisibilitystate": 3,
+				"profilestate": 1,
+				"personaname": "Viking",
+				"lastlogoff": 1483736691,
+				"profileurl": "http://steamcommunity.com/id/Viking/",
+				"avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/8f/8fa7f1d5b92270783d6632a43cb0594f592839fa.jpg",
+				"avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/8f/8fa7f1d5b92270783d6632a43cb0594f592839fa_medium.jpg",
+				"avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/8f/8fa7f1d5b92270783d6632a43cb0594f592839fa_full.jpg",
+				"personastate": 1,
+				"realname": "Viking",
+				"primaryclanid": "103582791429523489",
+				"timecreated": 1122128079,
+				"personastateflags": 0,
+				"gameextrainfo": "HITMAN™",
+				"gameid": "236870",
+				"loccountrycode": "SE"
+			},
+			{
+				"steamid": "76561197960435530",
+				"communityvisibilitystate": 3,
+				"profilestate": 1,
+				"personaname": "Robin",
+				"lastlogoff": 1483691127,
+				"profileurl": "http://steamcommunity.com/id/robinwalker/",
+				"avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f1/f1dd60a188883caf82d0cbfccfe6aba0af1732d4.jpg",
+				"avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f1/f1dd60a188883caf82d0cbfccfe6aba0af1732d4_medium.jpg",
+				"avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f1/f1dd60a188883caf82d0cbfccfe6aba0af1732d4_full.jpg",
+				"personastate": 0,
+				"realname": "Robin Walker",
+				"primaryclanid": "103582791429521412",
+				"timecreated": 1063407589,
+				"personastateflags": 0,
+				"loccountrycode": "US",
+				"locstatecode": "WA",
+				"loccityid": 3961
+			},
+			{
+				"steamid": "76561198006575550",
+				"communityvisibilitystate": 3,
+				"profilestate": 1,
+				"personaname": "peppage",
+				"lastlogoff": 1483636935,
+				"profileurl": "http://steamcommunity.com/id/peppage/",
+				"avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/92/92d1ca6bd2f503e6a711089470bc16e51632cad8.jpg",
+				"avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/92/92d1ca6bd2f503e6a711089470bc16e51632cad8_medium.jpg",
+				"avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/92/92d1ca6bd2f503e6a711089470bc16e51632cad8_full.jpg",
+				"personastate": 4,
+				"primaryclanid": "103582791456222563",
+				"timecreated": 1235096786,
+				"personastateflags": 0,
+				"loccountrycode": "US",
+				"locstatecode": "NJ"
+			}
+		]
+		
+	}
+}

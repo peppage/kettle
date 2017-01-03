@@ -2,6 +2,7 @@ package kettle
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/dghubble/sling"
 )
@@ -85,4 +86,58 @@ func (s *ISteamUserService) ResolveVanityURL(params *ResolveVanityURLParams) (*V
 	resp, err := s.sling.New().Get("ResolveVanityURL/v1/").QueryStruct(params).ReceiveSuccess(response)
 
 	return &response.VanityResponse, resp, err
+}
+
+type summaryResponse struct {
+	SResponse sResponse `json:"response"`
+}
+
+type sResponse struct {
+	Players []Player `json:"players"`
+}
+
+// Player is a struct of extended details about a steam user
+type Player struct {
+	SteamID             string `json:"steamid"`
+	CommunityVisibility int    `json:"communityvisibilitystate"`
+	ProfileState        int    `json:"profilestate"`
+	PersonaName         string `json:"personaname"`
+	LastLogoff          int64  `json:"lastlogoff"`
+	ProfileURL          string `json:"profileurl"`
+	Avatar              string `json:"avatar"`
+	AvatarMedium        string `json:"avatarmedium"`
+	AvatarFull          string `json:"avatarfull"`
+	PersonaState        int    `json:"personastate"`
+	RealName            string `json:"realname"`
+	PrimaryClanID       string `json:"primaryclanid"`
+	TimeCreated         int64  `json:"timecreated"`
+	PersonaStateFlags   int    `json:"personastateflags"`
+	LocCountryCode      string `json:"loccountrycode"`
+	LocStateCode        string `json:"locstatecode"`
+	LocCityID           int    `json:"loccityid"`
+	GameID              string `json:"gameid"`
+	GameTitle           string `json:"gameextrainfo"`
+}
+
+// GetPlayerSummaries gets a full summary about a steam user
+// https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0002.29
+// https://wiki.teamfortress.com/wiki/WebAPI/GetPlayerSummaries
+func (s *ISteamUserService) GetPlayerSummaries(ids []int64) ([]Player, *http.Response, error) {
+	var pids string
+	for w, i := range ids {
+		pids += strconv.FormatInt(i, 10)
+		if w != len(ids)-1 {
+			pids += ","
+		}
+	}
+
+	response := new(summaryResponse)
+
+	resp, err := s.sling.New().Path("GetPlayerSummaries/v2/").QueryStruct(struct {
+		SteamIDs string `url:"steamids"`
+	}{
+		SteamIDs: pids,
+	}).ReceiveSuccess(response)
+
+	return response.SResponse.Players, resp, err
 }
