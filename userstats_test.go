@@ -115,4 +115,9 @@ func TestISteamUserStatsServiceGetSchemaForGame(t *testing.T) {
 	assert.Equal(t, "Kill Lord Dredmor on Elvishly Easy Mode.", gameSchema.AvailableGameStats.Achievements[0].Description)
 	assert.Equal(t, "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/172d00c65ca72db30f9fa38727f7d8c8b70c1bd0.jpg", gameSchema.AvailableGameStats.Achievements[0].Icon)
 	assert.Equal(t, "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/ad5f99ddc91e7b059a0c94f2a80a0309c07f2c3c.jpg", gameSchema.AvailableGameStats.Achievements[0].IconGray)
+
+	assert.Len(t, gameSchema.AvailableGameStats.Stats, 5)
+	assert.Equal(t, "STAT_VICTORIES", gameSchema.AvailableGameStats.Stats[0].Name)
+	assert.Equal(t, 0, gameSchema.AvailableGameStats.Stats[0].DefaultValue)
+	assert.Equal(t, "Victories", gameSchema.AvailableGameStats.Stats[0].DisplayName)
 }

@@ -100,6 +100,7 @@ type GameSchema struct {
 // Stats are the listed achievements for a GameSchema
 type Stats struct {
 	Achievements []SchemaAchievement `json:"achievements"`
+	Stats        []SchemaStat        `json:"stats"`
 }
 
 // SchemaAchievement is an achievement for Stats part of ISteamUserStatsService.GetSchemaForGame
@@ -111,6 +112,13 @@ type SchemaAchievement struct {
 	Description  string `json:"description"`
 	Icon         string `json:"icon"`
 	IconGray     string `json:"icongray"`
+}
+
+// SchemaStat is a stat for Stats part of ISteamUserStatsService.GetSchemaForGame
+type SchemaStat struct {
+	Name         string `json:"name"`
+	DefaultValue int    `json:"defaultvalue"`
+	DisplayName  string `json:"displayName"`
 }
 
 // GetSchemaForGame returns gamename, gameversion and availablegamestats

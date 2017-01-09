@@ -50,6 +50,34 @@
 					"icongray": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/0dce82d7363fd9c8da346ee56b338466acdb82f4.jpg"
 				}
 			]
+			,
+			"stats": [
+				{
+					"name": "STAT_VICTORIES",
+					"defaultvalue": 0,
+					"displayName": "Victories"
+				},
+				{
+					"name": "STAT_PERMADEATH_VICTORIES",
+					"defaultvalue": 0,
+					"displayName": "Permadeath Victories"
+				},
+				{
+					"name": "STAT_DEATHS",
+					"defaultvalue": 0,
+					"displayName": "Deaths"
+				},
+				{
+					"name": "STAT_MONSTERS_KILLED",
+					"defaultvalue": 0,
+					"displayName": "Monsters Killed"
+				},
+				{
+					"name": "STAT_DIGGLES_KILLED",
+					"defaultvalue": 0,
+					"displayName": "Diggles Killed"
+				}
+			]
 			
 		}
 	}
