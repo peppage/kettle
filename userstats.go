@@ -52,3 +52,36 @@ func (s *ISteamUserStatsService) GetPlayerAchievements(params *GetPlayerAchievem
 
 	return &response.PlayerStats, resp, err
 }
+
+type gameAchievementResp struct {
+	AchievementPercentages achievementPercentages `json:"achievementpercentages"`
+}
+
+type achievementPercentages struct {
+	Achievements []GameAchievement `json:"achievements"`
+}
+
+// GameAchievement is the response for ISteamUserStatsService.GetGlobalAchievementPercentagesForApp
+type GameAchievement struct {
+	Name    string  `json:"name"`
+	Percent float64 `json:"percent"`
+}
+
+// GetGlobalAchievementPercentagesForApp Statistics showing how much of the player base have unlocked various achievements.
+// https://wiki.teamfortress.com/wiki/WebAPI/GetGlobalAchievementPercentagesForApp
+// https://developer.valvesoftware.com/wiki/Steam_Web_API#GetGlobalAchievementPercentagesForApp_.28v0002.29
+func (s *ISteamUserStatsService) GetGlobalAchievementPercentagesForApp(gameid int64) ([]GameAchievement, *http.Response, error) {
+	response := new(gameAchievementResp)
+
+	type params struct {
+		GameID int64 `url:"gameid"`
+	}
+
+	p := &params{
+		GameID: gameid,
+	}
+
+	resp, err := s.sling.New().Get("GetGlobalAchievementPercentagesForApp/v2/").QueryStruct(p).ReceiveSuccess(response)
+
+	return response.AchievementPercentages.Achievements, resp, err
+}

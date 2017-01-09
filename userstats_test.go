@@ -46,3 +46,34 @@ func TestISteamUserStatsServiceGetPlayerAchievements(t *testing.T) {
 
 	assert.True(t, resp.Success)
 }
+
+func TestISteamUserStatsServiceGetGlobalAchievementPercentagesForApp(t *testing.T) {
+	const filePath = "./json/isteamuserstats/getglobalachievementpercentagesforapp.json"
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/GetGlobalAchievementPercentagesForApp/v2/", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "GET", r)
+
+		assertQuery(t, map[string]string{
+			"key":    "",
+			"gameid": "98800",
+		}, r)
+
+		b, err := getTestFile(filePath)
+		if err != nil {
+			t.Fatalf("Failed to open testfile %s", filePath)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(b)
+	})
+
+	client := NewClient(httpClient, "")
+	chives, _, err := client.ISteamUserStatsService.GetGlobalAchievementPercentagesForApp(98800)
+
+	assert.Nil(t, err)
+	assert.Len(t, chives, 5)
+	assert.Equal(t, "ACHIEVEMENT_ORNITHOLOGIST", chives[0].Name)
+	assert.Equal(t, float64(66.185623168945313), chives[0].Percent)
+}

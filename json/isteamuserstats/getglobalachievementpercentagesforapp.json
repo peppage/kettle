@@ -1,0 +1,27 @@
+{
+	"achievementpercentages": {
+		"achievements": [
+			{
+				"name": "ACHIEVEMENT_ORNITHOLOGIST",
+				"percent": 66.185623168945313
+			},
+			{
+				"name": "ACHIEVEMENT_HE_WHO_SMELT_IT",
+				"percent": 41.130664825439453
+			},
+			{
+				"name": "ACHIEVEMENT_GUESS_WHOS_COMING_TO_DINNER",
+				"percent": 40.542781829833984
+			},
+			{
+				"name": "ACHIEVEMENT_WIZARD_KEYS",
+				"percent": 40.400997161865234
+			},
+			{
+				"name": "ACHIEVEMENT_HMS_DEAGLE",
+				"percent": 39.045925140380859
+			}
+		]
+		
+	}
+}
