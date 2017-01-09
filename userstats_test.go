@@ -77,3 +77,42 @@ func TestISteamUserStatsServiceGetGlobalAchievementPercentagesForApp(t *testing.
 	assert.Equal(t, "ACHIEVEMENT_ORNITHOLOGIST", chives[0].Name)
 	assert.Equal(t, float64(66.185623168945313), chives[0].Percent)
 }
+
+func TestISteamUserStatsServiceGetSchemaForGame(t *testing.T) {
+	const filePath = "./json/isteamuserstats/getschemaforgame.json"
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/GetSchemaForGame/v2/", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "GET", r)
+
+		assertQuery(t, map[string]string{
+			"key":   "",
+			"appid": "98800",
+		}, r)
+
+		b, err := getTestFile(filePath)
+		if err != nil {
+			t.Fatalf("Failed to open testfile %s", filePath)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(b)
+	})
+
+	client := NewClient(httpClient, "")
+	gameSchema, _, err := client.ISteamUserStatsService.GetSchemaForGame(98800)
+
+	assert.Nil(t, err)
+	assert.Equal(t, "Dungeons of Dredmor", gameSchema.GameName)
+	assert.Equal(t, "21", gameSchema.GameVersion)
+
+	assert.Len(t, gameSchema.AvailableGameStats.Achievements, 5)
+	assert.Equal(t, "ACHIEVEMENT_KILL_DREDMOR_EASY", gameSchema.AvailableGameStats.Achievements[0].Name)
+	assert.Equal(t, 0, gameSchema.AvailableGameStats.Achievements[0].DefaultValue)
+	assert.Equal(t, "Dread Less", gameSchema.AvailableGameStats.Achievements[0].DisplayName)
+	assert.Equal(t, 0, gameSchema.AvailableGameStats.Achievements[0].Hidden)
+	assert.Equal(t, "Kill Lord Dredmor on Elvishly Easy Mode.", gameSchema.AvailableGameStats.Achievements[0].Description)
+	assert.Equal(t, "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/172d00c65ca72db30f9fa38727f7d8c8b70c1bd0.jpg", gameSchema.AvailableGameStats.Achievements[0].Icon)
+	assert.Equal(t, "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/ad5f99ddc91e7b059a0c94f2a80a0309c07f2c3c.jpg", gameSchema.AvailableGameStats.Achievements[0].IconGray)
+}

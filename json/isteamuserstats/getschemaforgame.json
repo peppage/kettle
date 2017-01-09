@@ -1,0 +1,56 @@
+{
+	"game": {
+		"gameName": "Dungeons of Dredmor",
+		"gameVersion": "21",
+		"availableGameStats": {
+			"achievements": [
+				{
+					"name": "ACHIEVEMENT_KILL_DREDMOR_EASY",
+					"defaultvalue": 0,
+					"displayName": "Dread Less",
+					"hidden": 0,
+					"description": "Kill Lord Dredmor on Elvishly Easy Mode.",
+					"icon": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/172d00c65ca72db30f9fa38727f7d8c8b70c1bd0.jpg",
+					"icongray": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/ad5f99ddc91e7b059a0c94f2a80a0309c07f2c3c.jpg"
+				},
+				{
+					"name": "ACHIEVEMENT_KILL_DREDMOR_MEDIUM",
+					"defaultvalue": 0,
+					"displayName": "Dead Dread",
+					"hidden": 0,
+					"description": "Kill Lord Dredmor on Dwarvish Moderation Mode.",
+					"icon": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/6f02b2102ed07f62cefdd11bfd8f1e3b9fe11525.jpg",
+					"icongray": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/f656a4670647c3d5a4f91773af0602d34f61d0bd.jpg"
+				},
+				{
+					"name": "ACHIEVEMENT_KILL_DREDMOR_HARD",
+					"defaultvalue": 0,
+					"displayName": "Dread More",
+					"hidden": 0,
+					"description": "Kill Lord Dredmor on Going Rogue Mode.",
+					"icon": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/2ccbab0d8e69ce1c06644313b26b74aab2b189be.jpg",
+					"icongray": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/7944c3d9833d5adb994ec20621c05138b0a225fd.jpg"
+				},
+				{
+					"name": "ACHIEVEMENT_DEATH_BY_DIGGLE",
+					"defaultvalue": 0,
+					"displayName": "Welcome to Dredmor",
+					"hidden": 0,
+					"description": "Get killed at the hands (flippers?) of a Diggle.",
+					"icon": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/2e47c2fcf2f758c6e060b6b30ddf4f08bef925ea.jpg",
+					"icongray": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/0f6ad787bb8d48676741f0d6d32a80e5ea58008b.jpg"
+				},
+				{
+					"name": "ACHIEVEMENT_DEATH_BY_SICKLY_DIGGLE",
+					"defaultvalue": 0,
+					"displayName": "Gesundheit",
+					"hidden": 0,
+					"description": "Get killed at the hands of a Sickly Diggle.",
+					"icon": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/296aa2f2e54a64ff4bf10c7d2947f83f4f42f409.jpg",
+					"icongray": "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/98800/0dce82d7363fd9c8da346ee56b338466acdb82f4.jpg"
+				}
+			]
+			
+		}
+	}
+}

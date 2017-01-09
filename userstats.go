@@ -85,3 +85,49 @@ func (s *ISteamUserStatsService) GetGlobalAchievementPercentagesForApp(gameid in
 
 	return response.AchievementPercentages.Achievements, resp, err
 }
+
+type schemaResp struct {
+	Game GameSchema `json:"game"`
+}
+
+// GameSchema is the response for ISteamUserStatsService.GetSchemaForGame
+type GameSchema struct {
+	GameName           string `json:"gameName"`
+	GameVersion        string `json:"gameVersion"`
+	AvailableGameStats Stats  `json:"availableGameStats"`
+}
+
+// Stats are the listed achievements for a GameSchema
+type Stats struct {
+	Achievements []SchemaAchievement `json:"achievements"`
+}
+
+// SchemaAchievement is an achievement for Stats part of ISteamUserStatsService.GetSchemaForGame
+type SchemaAchievement struct {
+	Name         string `json:"name"`
+	DefaultValue int    `json:"defaultvalue"`
+	DisplayName  string `json:"displayName"`
+	Hidden       int    `json:"hidden"`
+	Description  string `json:"description"`
+	Icon         string `json:"icon"`
+	IconGray     string `json:"icongray"`
+}
+
+// GetSchemaForGame returns gamename, gameversion and availablegamestats
+// https://wiki.teamfortress.com/wiki/WebAPI/GetSchemaForGame
+// https://developer.valvesoftware.com/wiki/Steam_Web_API#GetSchemaForGame_.28v2.29
+func (s *ISteamUserStatsService) GetSchemaForGame(appid int64) (*GameSchema, *http.Response, error) {
+	response := new(schemaResp)
+
+	type params struct {
+		AppID int64 `url:"appid"`
+	}
+
+	p := &params{
+		AppID: appid,
+	}
+
+	resp, err := s.sling.New().Get("GetSchemaForGame/v2/").QueryStruct(p).ReceiveSuccess(response)
+
+	return &response.Game, resp, err
+}
