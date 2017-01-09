@@ -10,11 +10,12 @@ import (
 type Client struct {
 	sling *sling.Sling
 
-	Store             *StoreService
-	IPlayerService    *IPlayerService
-	ISteamAppsService *ISteamAppsService
-	ISteamNewsService *ISteamNewsService
-	ISteamUserService *ISteamUserService
+	Store                  *StoreService
+	IPlayerService         *IPlayerService
+	ISteamAppsService      *ISteamAppsService
+	ISteamNewsService      *ISteamNewsService
+	ISteamUserService      *ISteamUserService
+	ISteamUserStatsService *ISteamUserStatsService
 }
 
 // NewClient returns a new Client
@@ -29,12 +30,13 @@ func NewClient(httpClient *http.Client, key string) *Client {
 	})
 
 	return &Client{
-		sling:             b,
-		Store:             newStoreService(b.New().Base("https://store.steampowered.com/api/")),
-		IPlayerService:    newIPlayerService(apiBase.New()),
-		ISteamAppsService: newISteamAppsService(apiBase.New()),
-		ISteamNewsService: newISteamNewsService(apiBase.New()),
-		ISteamUserService: newISteamUserService(apiBase.New()),
+		sling:                  b,
+		Store:                  newStoreService(b.New().Base("https://store.steampowered.com/api/")),
+		IPlayerService:         newIPlayerService(apiBase.New()),
+		ISteamAppsService:      newISteamAppsService(apiBase.New()),
+		ISteamNewsService:      newISteamNewsService(apiBase.New()),
+		ISteamUserService:      newISteamUserService(apiBase.New()),
+		ISteamUserStatsService: newISteamUserStatsService(apiBase.New()),
 	}
 }
 

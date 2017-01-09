@@ -7,7 +7,7 @@ import (
 	"github.com/dghubble/sling"
 )
 
-// ISteamUserService provides access information about a steam user
+// ISteamUserService provides access to information about a steam user
 type ISteamUserService struct {
 	sling *sling.Sling
 }

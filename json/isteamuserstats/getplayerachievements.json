@@ -1,0 +1,30 @@
+{
+	"playerstats": {
+		"steamID": "76561198006575550",
+		"gameName": "Dungeons of Dredmor",
+		"achievements": [
+			{
+				"apiname": "ACHIEVEMENT_KILL_DREDMOR_EASY",
+				"achieved": 1
+			},
+			{
+				"apiname": "ACHIEVEMENT_KILL_DREDMOR_MEDIUM",
+				"achieved": 0
+			},
+			{
+				"apiname": "ACHIEVEMENT_KILL_DREDMOR_HARD",
+				"achieved": 0
+			},
+			{
+				"apiname": "ACHIEVEMENT_DEATH_BY_DIGGLE",
+				"achieved": 1
+			},
+			{
+				"apiname": "ACHIEVEMENT_DEATH_BY_SICKLY_DIGGLE",
+				"achieved": 1
+			}
+		]
+		,
+		"success": true
+	}
+}
