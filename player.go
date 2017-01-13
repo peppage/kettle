@@ -13,7 +13,7 @@ type IPlayerService struct {
 
 func newIPlayerService(sling *sling.Sling) *IPlayerService {
 	return &IPlayerService{
-		sling: sling.Path("IPlayerService"),
+		sling: sling.Path("IPlayerService/"),
 	}
 }
 

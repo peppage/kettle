@@ -13,7 +13,7 @@ type ISteamUserStatsService struct {
 
 func newISteamUserStatsService(sling *sling.Sling) *ISteamUserStatsService {
 	return &ISteamUserStatsService{
-		sling: sling.Path("ISteamUserStats"),
+		sling: sling.Path("ISteamUserStats/"),
 	}
 }
 

@@ -14,7 +14,7 @@ type ISteamUserService struct {
 
 func newISteamUserService(sling *sling.Sling) *ISteamUserService {
 	return &ISteamUserService{
-		sling: sling.Path("ISteamUser"),
+		sling: sling.Path("ISteamUser/"),
 	}
 }
 
