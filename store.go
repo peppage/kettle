@@ -195,7 +195,7 @@ func (s *StoreService) AppDetails(id int64) (*AppData, *http.Response, error) {
 	i := strconv.FormatInt(id, 10)
 	a := response[i].AppData
 
-	if !response[i].Success && err != nil {
+	if !response[i].Success && err == nil {
 		err = errors.New("API request failed with Success = false")
 	}
 
