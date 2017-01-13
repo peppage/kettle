@@ -50,7 +50,7 @@ type AppData struct {
 	Developers          []string        `json:"developers"`
 	Publishers          []string        `json:"publishers"`
 	PriceOverview       Price           `json:"price_overview"`
-	Packages            []int           `json:"packages"`
+	Packages            json.RawMessage `json:"packages"` // Can be an array of strings or ints
 	PackageGroups       []PackageGroup  `json:"package_groups"`
 	Platforms           Platform        `json:"platforms"`
 	MetaCritic          MetaCritic      `json:"metacritic,omitempty"`
