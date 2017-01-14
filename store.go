@@ -35,7 +35,7 @@ type AppData struct {
 	RequiredAge         interface{}     `json:"required_age"` // Can be string or int
 	IsFree              bool            `json:"is_free"`
 	ControllerSupport   string          `json:"controller_support"`
-	Dlc                 []int64         `json:"dlc"`
+	Dlc                 []int64         `json:"dlc,omitempty"`
 	DetailedDescription string          `json:"detailed_description"`
 	AboutTheGame        string          `json:"about_the_game"`
 	ShortDescription    string          `json:"short_description"`
@@ -94,14 +94,14 @@ type PackageGroup struct {
 
 // Sub is part of the PackageGroup, details about a package
 type Sub struct {
-	PackageID                int64  `json:"packageid"`
-	PercentSavingsText       string `json:"percent_savings_text"`
-	PercentSavings           int    `json:"percent_savings"`
-	OptionText               string `json:"option_text"`
-	OptionDescription        string `json:"option_description"`
-	CanGetFreeLicense        string `json:"can_get_free_license"`
-	IsFreeLicense            bool   `json:"is_free_license"`
-	PriceInCentsWithDiscount int    `json:"price_in_cents_with_discount"`
+	PackageID                json.RawMessage `json:"packageid"` // This could be a string or int64
+	PercentSavingsText       string          `json:"percent_savings_text"`
+	PercentSavings           int             `json:"percent_savings"`
+	OptionText               string          `json:"option_text"`
+	OptionDescription        string          `json:"option_description"`
+	CanGetFreeLicense        string          `json:"can_get_free_license"`
+	IsFreeLicense            bool            `json:"is_free_license"`
+	PriceInCentsWithDiscount int             `json:"price_in_cents_with_discount"`
 }
 
 // Platform lists what platforms this app works on
