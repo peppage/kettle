@@ -10,6 +10,7 @@ import (
 )
 
 func TestStoreServiceAppDetails(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/store/appdetails.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
@@ -142,6 +143,7 @@ func TestStoreServiceAppDetails(t *testing.T) {
 }
 
 func TestStoreAppReviews(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/store/appreviews.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()

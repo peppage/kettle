@@ -8,6 +8,7 @@ import (
 )
 
 func TestISteamAppsServicegGetAppList(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/isteamappservice/getapplist.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()

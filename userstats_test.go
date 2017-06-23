@@ -8,6 +8,7 @@ import (
 )
 
 func TestISteamUserStatsServiceGetPlayerAchievements(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/isteamuserstats/getplayerachievements.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
@@ -48,6 +49,7 @@ func TestISteamUserStatsServiceGetPlayerAchievements(t *testing.T) {
 }
 
 func TestISteamUserStatsServiceGetGlobalAchievementPercentagesForApp(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/isteamuserstats/getglobalachievementpercentagesforapp.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
@@ -79,6 +81,7 @@ func TestISteamUserStatsServiceGetGlobalAchievementPercentagesForApp(t *testing.
 }
 
 func TestISteamUserStatsServiceGetSchemaForGame(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/isteamuserstats/getschemaforgame.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()

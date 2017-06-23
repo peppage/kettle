@@ -8,6 +8,7 @@ import (
 )
 
 func TestISteamUserServiceGetFriendList(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/isteamuser/getfriendlist.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
@@ -43,6 +44,7 @@ func TestISteamUserServiceGetFriendList(t *testing.T) {
 }
 
 func TestISteamUserServiceResolveVanityURL(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/isteamuser/resolvevanityurl.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
@@ -77,6 +79,7 @@ func TestISteamUserServiceResolveVanityURL(t *testing.T) {
 }
 
 func TestISteamUserServiceGetPlayerSummaries(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/isteamuser/getplayersummaries.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()

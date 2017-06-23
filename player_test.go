@@ -8,6 +8,7 @@ import (
 )
 
 func TestIPlayerServiceGetOwnedGames(t *testing.T) {
+	t.Parallel()
 	const filePath = "./json/iplayerservice/ownedgames.complete.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
