@@ -140,3 +140,62 @@ func TestStoreServiceAppDetails(t *testing.T) {
 
 	assert.Equal(t, "http://cdn.akamai.steamstatic.com/steam/apps/289070/page_bg_generated_v6b.jpg?t=1482279729", game.Background)
 }
+
+func TestStoreAppReviews(t *testing.T) {
+	const filePath = "./json/store/appreviews.json"
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/appreviews/618690", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "GET", r)
+
+		b, err := getTestFile(filePath)
+		if err != nil {
+			t.Fatalf("Failed to open testfile %s", filePath)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(b)
+	})
+
+	client := NewClient(httpClient, "")
+	reviewData, _, err := client.Store.AppReviews(618690)
+
+	assert.Nil(t, err)
+
+	assert.Equal(t, 1, reviewData.Success)
+
+	assert.Equal(t, 2, reviewData.QuerySummary.NumberReviews)
+	assert.Equal(t, 0, reviewData.QuerySummary.ReviewScore)
+	assert.Equal(t, "2 user reviews", reviewData.QuerySummary.ReviewScoreDescription)
+	assert.Equal(t, 2, reviewData.QuerySummary.TotalPositive)
+	assert.Equal(t, 0, reviewData.QuerySummary.TotalNegative)
+	assert.Equal(t, 2, reviewData.QuerySummary.TotalReviews)
+
+	assert.Len(t, reviewData.Reviews, 2)
+
+	assert.Equal(t, "32524002", reviewData.Reviews[0].ID)
+
+	assert.Equal(t, "76561198013832579", reviewData.Reviews[0].Author.UserID)
+	assert.Equal(t, 72, reviewData.Reviews[0].Author.NumberGamesOwned)
+	assert.Equal(t, 6, reviewData.Reviews[0].Author.NumberReviews)
+	assert.Equal(t, 416, reviewData.Reviews[0].Author.PlayTimeForever)
+	assert.Equal(t, 416, reviewData.Reviews[0].Author.PlaytimeLastTwoWeeks)
+	assert.Equal(t, int64(1498218412), reviewData.Reviews[0].Author.LastPlayed)
+
+	assert.Equal(t, "english", reviewData.Reviews[0].Language)
+	assert.Equal(t, "Gorescript is a single-player FPS in the vein of Quake or Doom but it has quite a bit to offer beyond a simple nostalgia trip.\n\nPros:\n-Great level design. Levels feel fluid, fast, and fun - never boring\n-Soundtrack. Glitchy eletronic music that sets a dark and nervous tone for the game.\n-Weapon balance. Every weapon is purpose-built. Old school FPS players will enjoy swapping guns as the situation demands.\n-Extra features and game modes. 5 difficulty levels, permadeath, speedrunning leaderboards, and the very interesting blackout mode. Loads of replay value.\n-Jump kills. I never knew I wanted to Goomba stomp baddies in an FPS until Gorescript. Super fun and interesting addition, and a great way to save ammo.\n\nCons:\n-Minor glitches. You can occasionally find yourself temporarily stuck in the ceiling after a jump. I never got stuck permanently and it was not disruptive to gameplay. \n-Strafe running is under-utilized. Level 1 teaches players to \"Strafe run\" - use circle-strafe techniques to get enough speed to cross small gaps. This is very rarely needed in the rest of the game and it feels like a forgotten technique in later levels.\n\nOverall, I highly recommend this game! Easily the most exciting and interesting single-player experience I have had in 2017!", reviewData.Reviews[0].Review)
+	assert.Equal(t, int64(1497751727), reviewData.Reviews[0].TimeCreated)
+	assert.Equal(t, int64(1497751727), reviewData.Reviews[0].TimeUpdated)
+	assert.Equal(t, true, reviewData.Reviews[0].VotedUp)
+	assert.Equal(t, 5, reviewData.Reviews[0].VotesUp)
+	assert.Equal(t, 2, reviewData.Reviews[0].VotesDown)
+	assert.Equal(t, 0, reviewData.Reviews[0].VotesFunny)
+	assert.Equal(t, "0.500802", reviewData.Reviews[0].WeightedVoteScore)
+	commentCount := "0"
+	json.Unmarshal(reviewData.Reviews[0].CommentCount, &commentCount)
+	assert.Equal(t, "1", commentCount)
+	assert.Equal(t, true, reviewData.Reviews[0].SteamPurchase)
+	assert.Equal(t, false, reviewData.Reviews[0].ReceivedForFree)
+	assert.Equal(t, false, reviewData.Reviews[0].EarlyAccess)
+}

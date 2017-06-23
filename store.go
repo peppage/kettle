@@ -186,7 +186,7 @@ type SupportInfo struct {
 func (s *StoreService) AppDetails(id int64) (*AppData, *http.Response, error) {
 	response := make(map[string]appDetails)
 
-	resp, err := s.sling.New().Path("appdetails").QueryStruct(struct {
+	resp, err := s.sling.New().Path("api/appdetails").QueryStruct(struct {
 		AppIDs int64 `url:"appids"`
 	}{
 		AppIDs: id,
@@ -200,4 +200,62 @@ func (s *StoreService) AppDetails(id int64) (*AppData, *http.Response, error) {
 	}
 
 	return &a, resp, err
+}
+
+type AppReview struct {
+	Success      int          `json:"success"`
+	QuerySummary QuerySummary `json:"query_summary"`
+	Reviews      []Review     `json:"reviews"`
+}
+
+type QuerySummary struct {
+	NumberReviews          int    `json:"num_reviews"`
+	ReviewScore            int    `json:"review_score"`
+	ReviewScoreDescription string `json:"review_score_desc"`
+	TotalPositive          int    `json:"total_positive"`
+	TotalNegative          int    `json:"total_negative"`
+	TotalReviews           int    `json:"total_reviews"`
+}
+
+type Review struct {
+	ID                string          `json:"recommendationid"`
+	Author            Author          `json:"author"`
+	Language          string          `json:"language"`
+	Review            string          `json:"review"`
+	TimeCreated       int64           `json:"timestamp_created"`
+	TimeUpdated       int64           `json:"timestamp_updated"`
+	VotedUp           bool            `json:"voted_up"`
+	VotesUp           int             `json:"votes_up"`
+	VotesDown         int             `json:"votes_down"`
+	VotesFunny        int             `json:"votes_funny"`
+	WeightedVoteScore string          `json:"weighted_vote_score"`
+	CommentCount      json.RawMessage `json:"comment_count"` // if < 1 string if == 0 int
+	SteamPurchase     bool            `json:"steam_purchase"`
+	ReceivedForFree   bool            `json:"received_for_free"`
+	EarlyAccess       bool            `json:"written_during_early_access"`
+}
+
+type Author struct {
+	UserID               string `json:"steamid"`
+	NumberGamesOwned     int    `json:"num_games_owned"`
+	NumberReviews        int    `json:"num_reviews"`
+	PlayTimeForever      int    `json:"playtime_forever"`
+	PlaytimeLastTwoWeeks int    `json:"playtime_last_two_weeks"`
+	LastPlayed           int64  `json:"last_played"`
+}
+
+// AppReviews gets review data for a game
+// https://partner.steamgames.com/doc/store/reviews
+func (s *StoreService) AppReviews(id int64) (*AppReview, *http.Response, error) {
+	response := new(AppReview)
+
+	stringID := strconv.FormatInt(id, 10)
+
+	resp, err := s.sling.New().Path("appreviews/" + stringID).ReceiveSuccess(response)
+
+	if response.Success == 0 {
+		err = errors.New("API request for reviews failed with Success = 0")
+	}
+
+	return response, resp, err
 }

@@ -31,7 +31,7 @@ func NewClient(httpClient *http.Client, key string) *Client {
 
 	return &Client{
 		sling:                  b,
-		Store:                  newStoreService(b.New().Base("https://store.steampowered.com/api/")),
+		Store:                  newStoreService(b.New().Base("https://store.steampowered.com/")),
 		IPlayerService:         newIPlayerService(apiBase.New()),
 		ISteamAppsService:      newISteamAppsService(apiBase.New()),
 		ISteamNewsService:      newISteamNewsService(apiBase.New()),

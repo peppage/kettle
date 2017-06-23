@@ -1,0 +1,61 @@
+{
+  "success": 1,
+  "query_summary": {
+    "num_reviews": 2,
+    "review_score": 0,
+    "review_score_desc": "2 user reviews",
+    "total_positive": 2,
+    "total_negative": 0,
+    "total_reviews": 2
+  },
+  "reviews": [
+    {
+      "recommendationid": "32524002",
+      "author": {
+        "steamid": "76561198013832579",
+        "num_games_owned": 72,
+        "num_reviews": 6,
+        "playtime_forever": 416,
+        "playtime_last_two_weeks": 416,
+        "last_played": 1498218412
+      },
+      "language": "english",
+      "review": "Gorescript is a single-player FPS in the vein of Quake or Doom but it has quite a bit to offer beyond a simple nostalgia trip.\n\nPros:\n-Great level design. Levels feel fluid, fast, and fun - never boring\n-Soundtrack. Glitchy eletronic music that sets a dark and nervous tone for the game.\n-Weapon balance. Every weapon is purpose-built. Old school FPS players will enjoy swapping guns as the situation demands.\n-Extra features and game modes. 5 difficulty levels, permadeath, speedrunning leaderboards, and the very interesting blackout mode. Loads of replay value.\n-Jump kills. I never knew I wanted to Goomba stomp baddies in an FPS until Gorescript. Super fun and interesting addition, and a great way to save ammo.\n\nCons:\n-Minor glitches. You can occasionally find yourself temporarily stuck in the ceiling after a jump. I never got stuck permanently and it was not disruptive to gameplay. \n-Strafe running is under-utilized. Level 1 teaches players to \"Strafe run\" - use circle-strafe techniques to get enough speed to cross small gaps. This is very rarely needed in the rest of the game and it feels like a forgotten technique in later levels.\n\nOverall, I highly recommend this game! Easily the most exciting and interesting single-player experience I have had in 2017!",
+      "timestamp_created": 1497751727,
+      "timestamp_updated": 1497751727,
+      "voted_up": true,
+      "votes_up": 5,
+      "votes_down": 2,
+      "votes_funny": 0,
+      "weighted_vote_score": "0.500802",
+      "comment_count": "1",
+      "steam_purchase": true,
+      "received_for_free": false,
+      "written_during_early_access": false
+    },
+    {
+      "recommendationid": "32456509",
+      "author": {
+        "steamid": "76561198232622752",
+        "num_games_owned": 54,
+        "num_reviews": 14,
+        "playtime_forever": 31,
+        "playtime_last_two_weeks": 31,
+        "last_played": 1497561051
+      },
+      "language": "english",
+      "review": "I had some fun with this game. I think it should cost around $5 instead of 10 personally. It is a nice throwback shooter though so if you are into that I think you would find this game worth the price. All in all I did enjoy it and I do think I will play this game some more!\n\nCheck out my video to see some gameplay:\nhttps://www.youtube.com/watch?v=xm4P3xH3sHI",
+      "timestamp_created": 1497568433,
+      "timestamp_updated": 1497568433,
+      "voted_up": true,
+      "votes_up": 4,
+      "votes_down": 5,
+      "votes_funny": 0,
+      "weighted_vote_score": "0.494071",
+      "comment_count": 0,
+      "steam_purchase": true,
+      "received_for_free": false,
+      "written_during_early_access": false
+    }
+  ]
+}
