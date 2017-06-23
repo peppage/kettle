@@ -14,7 +14,7 @@ func TestStoreServiceAppDetails(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("store.steampowered.com/api/appdetails", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/appdetails", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{"appids": "289070"}, r)

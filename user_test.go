@@ -12,7 +12,7 @@ func TestISteamUserServiceGetFriendList(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/GetFriendList/v1/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/ISteamUser/GetFriendList/v1/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{
@@ -47,7 +47,7 @@ func TestISteamUserServiceResolveVanityURL(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/ResolveVanityURL/v1/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/ISteamUser/ResolveVanityURL/v1/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{
@@ -81,7 +81,7 @@ func TestISteamUserServiceGetPlayerSummaries(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/GetPlayerSummaries/v2/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/ISteamUser/GetPlayerSummaries/v2/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{

@@ -12,7 +12,7 @@ func TestISteamUserStatsServiceGetPlayerAchievements(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/GetPlayerAchievements/v1/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/ISteamUserStats/GetPlayerAchievements/v1/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{
@@ -52,7 +52,7 @@ func TestISteamUserStatsServiceGetGlobalAchievementPercentagesForApp(t *testing.
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/GetGlobalAchievementPercentagesForApp/v2/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{
@@ -83,7 +83,7 @@ func TestISteamUserStatsServiceGetSchemaForGame(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/GetSchemaForGame/v2/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/ISteamUserStats/GetSchemaForGame/v2/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{

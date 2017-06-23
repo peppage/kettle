@@ -3,15 +3,16 @@ package kettle
 import (
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
-import "github.com/stretchr/testify/assert"
 
 func TestISteamAppsServicegGetAppList(t *testing.T) {
 	const filePath = "./json/isteamappservice/getapplist.json"
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/GetAppList/v2/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/ISteamApps/GetAppList/v2/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{

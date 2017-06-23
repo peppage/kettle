@@ -12,7 +12,7 @@ func TestIPlayerServiceGetOwnedGames(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/GetOwnedGames/v1/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/IPlayerService/GetOwnedGames/v1/", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 
 		assertQuery(t, map[string]string{
