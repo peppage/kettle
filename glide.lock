@@ -1,10 +1,10 @@
 hash: 1502e2a772aa36dc5652184e87641721a40a6c019be60fa4d9d4c36f8c846282
-updated: 2017-01-04T15:24:48.5073069-05:00
+updated: 2017-06-23T16:43:08.813762-04:00
 imports:
 - name: github.com/dghubble/sling
   version: eb56e89ac5088bebb12eef3cb4b293300f43608b
 - name: github.com/google/go-querystring
-  version: 9235644dd9e52eeae6fa48efd539fdc351a0af53
+  version: 53e6ce116135b80d037921a7fdd5138cf32d7a8a
   subpackages:
   - query
 - name: github.com/stretchr/testify
@@ -13,7 +13,7 @@ imports:
   - assert
 testImports:
 - name: github.com/davecgh/go-spew
-  version: 04cdfd42973bb9c8589fd6a731800cf222fde1a9
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
   subpackages:
   - spew
 - name: github.com/pmezard/go-difflib
