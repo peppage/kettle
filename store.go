@@ -251,7 +251,11 @@ func (s *StoreService) AppReviews(id int64) (*AppReview, *http.Response, error) 
 
 	stringID := strconv.FormatInt(id, 10)
 
-	resp, err := s.sling.New().Path("appreviews/" + stringID).ReceiveSuccess(response)
+	resp, err := s.sling.New().Path("appreviews/" + stringID).QueryStruct(struct {
+		JSON int `url:"json"`
+	}{
+		JSON: 1,
+	}).ReceiveSuccess(response)
 
 	if response.Success == 0 {
 		err = errors.New("API request for reviews failed with Success = 0")
