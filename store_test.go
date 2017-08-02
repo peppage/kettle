@@ -161,7 +161,9 @@ func TestStoreAppReviews(t *testing.T) {
 	})
 
 	client := NewClient(httpClient, "")
-	reviewData, _, err := client.Store.AppReviews(618690)
+	reviewData, _, err := client.Store.AppReviews(&AppReviewsParams{
+		AppID: 618690,
+	})
 
 	assert.Nil(t, err)
 
