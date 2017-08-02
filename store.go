@@ -244,18 +244,29 @@ type Author struct {
 	LastPlayed           int64  `json:"last_played"`
 }
 
+// AppReviewsParams are the parameters for Store.AppReviews
+// https://partner.steamgames.com/doc/store/getreviews
+type AppReviewsParams struct {
+	JSON         int `url:"json"`
+	AppID        int64
+	Filter       string `url:"filter,omitempty"`
+	Language     string `url:"language,omitempty"`
+	DayRange     string `url:"day_range,omitempty"`
+	StartOffset  string `url:"start_offset,omitempty"`
+	ReviewType   string `url:"review_type,omitempty"`
+	PurchaseType string `url:"purchase_type,omitempty"`
+}
+
 // AppReviews gets review data for a game
 // https://partner.steamgames.com/doc/store/reviews
-func (s *StoreService) AppReviews(id int64) (*AppReview, *http.Response, error) {
+func (s *StoreService) AppReviews(params *AppReviewsParams) (*AppReview, *http.Response, error) {
 	response := new(AppReview)
 
-	stringID := strconv.FormatInt(id, 10)
+	stringID := strconv.FormatInt(params.AppID, 10)
 
-	resp, err := s.sling.New().Path("appreviews/" + stringID).QueryStruct(struct {
-		JSON int `url:"json"`
-	}{
-		JSON: 1,
-	}).ReceiveSuccess(response)
+	params.JSON = 1
+
+	resp, err := s.sling.New().Path("appreviews/" + stringID).QueryStruct(params).ReceiveSuccess(response)
 
 	if response.Success == 0 {
 		err = errors.New("API request for reviews failed with Success = 0")
