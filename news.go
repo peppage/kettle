@@ -19,10 +19,11 @@ func newISteamNewsService(sling *sling.Sling) *ISteamNewsService {
 
 // GetNewsForAppParams are the paremeters for ISteamNewsService.GetNewsForApp
 type GetNewsForAppParams struct {
-	AppID     int64 `url:"appid"`
-	MaxLength int   `url:"maxlength,omitempty"`
-	EndDate   int64 `url:"enddate,omitempty"`
-	Count     int   `url:"count,omitempty"`
+	AppID     int64  `url:"appid"`
+	MaxLength int    `url:"maxlength,omitempty"`
+	EndDate   int64  `url:"enddate,omitempty"`
+	Count     int    `url:"count,omitempty"`
+	FeedName  string `url:"feedname,omitempty"`
 }
 
 type newsResponse struct {
