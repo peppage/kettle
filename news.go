@@ -45,7 +45,7 @@ type NewsItem struct {
 	Contents    string `json:"contents"`
 	FeedLabel   string `json:"feedlabel"`
 	Date        int64  `json:"date"`
-	FeedName    string `json:"feeds"`
+	FeedName    string `json:"feedname"`
 }
 
 // GetNewsForApp returns the latest of a game specified by its appID.
